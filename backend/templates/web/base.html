@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ title }}{% endblock %}</title>
+    <!-- Add your CSS links here -->
+    <link rel="stylesheet" href="{% static 'dist/css/base-bundle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fontawsome.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+{% include 'web/components/toast.html' %}
+{% include 'web/components/navbar.html' %}
+{% block content %}
+
+{% endblock %}
+{% include 'web/components/footer.html' %}
+<!-- Add JavaScript files -->
+
+<script src="{% static 'dist/js/base-bundle.js' %}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,113 @@
+{% extends 'web/base.html' %}
+{% load i18n %}
+{% block content %}
+    <section class="my-6 flex justify-center items-start ">
+        <div class="container grid grid-cols-1 lg:grid-cols-3 space-y-4 lg:space-y-0 lg:space-x-4 p-4">
+            <div class="col-span-1 lg:col-span-2">
+                <ul class="w-full flex flex-col space-y-4">
+                    {% for item in cart_items %}
+                        <li class="card w-full max-w-none" id="cart-item-{{ item.id }}">
+                            <div class="w-full flex space-x-6 justify-start items-start flex-wrap">
+                                <div class="w-fit">
+                                    <a href="{{ item.product.get_absolute_url }}">
+                                        <img src="{{ item.product.get_featured_media }}" alt="{{ item.product.name }}"
+                                             class="w-[100px] h-[100px] object-center object-cover rounded-lg">
+                                    </a>
+                                </div>
+                                <div class="basis-1/2 lg:basis-3/6 flex flex-col justify-between items-baseline h-[100px]">
+                                    <p class="font-medium text-gray-900 text-lg hover:underline">
+                                        <a href="{{ item.product.get_absolute_url }}">{{ item.product.name }}</a>
+                                    </p>
+                                    <div class="flex justify-start items-start">
+                                        <button class="btn-cart-item-remove text-danger-600 text-sm hover:underline font-bold"
+                                                data-id="{{ item.id }}">
+                                            <i class="fa-solid fa-x mx-2"></i>
+                                            Remove
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="basis-1/6">
+                                    <div class="flex justify-between items-center gap-3 h-[100px] w-fit">
+                                        <button class="btn-cart-item-decrease btn bg-gray-100 border-gray-200 border text-gray-900 btn-xs m-0 p-2  hover:bg-gray-200"
+                                                data-id="{{ item.id }}"
+                                        >
+                                            <i class="fa-solid fa-minus"></i>
+                                        </button>
+                                        <span id="cart-item-quantity-{{ item.id }}" class="text-lg font-medium">
+                                            {{ item.quantity }}
+                                        </span>
+                                        <button class="btn-cart-item-increase btn bg-gray-100 border-gray-200 border text-gray-900 btn-xs m-0 p-2  hover:bg-gray-200"
+                                                data-id="{{ item.id }}"
+                                                data-max="{{ item.product.stock.available_stock }}"
+                                        >
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-between items-center h-[100px] ">
+                                    <p class="font-bold text-lg">{{ item.product.get_display_price }}</p>
+                                </div>
+                            </div>
+
+                        </li>
+                    {% empty %}
+                        <li class="card w-full max-w-none">
+                            <p class="text-gray-500 text-center">{% translate 'Your shopping cart is empty.' %}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-span-1 ">
+                <div class="card w-full">
+                    <h3 class="text-xl font-semibold">{% translate 'Order summery' %}</h3>
+                    <ul class="flex flex-col space-y-4 my-2">
+                        <li class="flex justify-between items-center">
+                            <span class="text-gray-500">
+                                {% translate 'Original price' %}
+                            </span>
+                            <span class="text-gray-900 font-semibold" id="span-original-price">
+                                {{ cart.get_display_price }}
+                            </span>
+                        </li>
+                        <li class="flex justify-between items-center">
+                            <span class="text-gray-500">
+                                {% translate 'Saving' %}
+                            </span>
+                            <span class="text-gray-900 font-semibold">
+                                $0
+                            </span>
+                        </li>
+                        <hr/>
+                        <li class="flex justify-between items-center">
+                            <span class="text-gray-500">
+                                {% translate 'Total' %}
+                            </span>
+                            <span class="text-gray-900 font-semibold" id="span-total-price">
+                                {{ cart.get_display_price }}
+                            </span>
+                        </li>
+                        <li>
+                            {% if cart_items_count > 0 %}
+                                <a href="{% url 'shop:checkout' %}"
+                                   class="btn btn-gradient-primary">{% translate 'Checkout' %}</a>
+                            {% else %}
+                                <p class="text-center text-gray-500 text-sm">{% translate 'your shopping cart is empty.' %}</p>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+{% endblock %}
+{% block scripts %}
+    <script>
+
+        var cartItemsUrl = "{% url 'api:cart_item' 0 %}"
+    </script>
+{% endblock %}

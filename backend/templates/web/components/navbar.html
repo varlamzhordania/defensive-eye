@@ -1,0 +1,46 @@
+{% load i18n %}
+
+{% url 'main:home' as home_url %}
+{% url 'main:product' as product_url %}
+
+<header class="sticky top-0 shadow z-50">
+    <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+        <div class="relative flex flex-wrap justify-between items-center mx-auto max-w-screen-xl z-50">
+            <a href="https://flowbite.com" class="flex items-center">
+                <img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo"/>
+                <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
+            </a>
+            <div class="flex items-center lg:order-2">
+                {% if request.user.is_authenticated %}
+                    {% include 'web/components/navbar_user_avatar.html' %}
+                {% else %}
+                    <a href="{% url 'accounts:login' %}"
+                       class="btn btn-gradient-secondary btn-pill">{% translate 'Log in' %}</a>
+                    <a href="{% url 'accounts:register' %}"
+                       class="btn btn-gradient-primary btn-pill">{% translate 'Get started' %}</a>
+                {% endif %}
+            </div>
+            <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
+                <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+                    <li>
+                        <a href="{{ home_url }}" class="link {% if active_tab == home_url %}active{% endif %}"
+                           {% if active_tab == home_url %}aria-current="page"{% endif %}
+                        >
+                            {% translate 'Home' %}
+                        </a>
+                    </li>
+                    <li>
+                        <button id="mega-menu-trigger" class="link {% if active_tab == product_url %}active{% endif %}">{% translate 'Products' %}</button>
+                    </li>
+                    <li>
+                        <a href="#" class="link">{% translate 'About US' %}</a>
+                    </li>
+                    <li>
+                        <a href="#" class="link">{% translate 'Contact US' %}</a>
+                    </li>
+                </ul>
+            </div>
+            {% include 'web/components/mega_menu.html' %}
+        </div>
+    </nav>
+</header>

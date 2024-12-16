@@ -1,0 +1,59 @@
+{% extends 'web/base.html' %}
+{% load i18n %}
+{% block content %}
+    <section class="my-6 w-full flex justify-center items-center">
+        <div class="container grid grid-cols-1 lg:grid-cols-3 lg:space-x-6 p-4">
+            <div class="col-span-1 max-w-xl">
+                <div class="splide" id="product-slider-main" aria-label="product main media images">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            {% for image in product.media.all %}
+                                <li class="splide__slide">
+                                    <img src="{{ image.image.url }}" alt="Image for {{ product.name }}">
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="splide my-6" id="product-thumbnail-slider" aria-label="product thumbnail media images">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            {% for image in product.media.all %}
+                                <li class="splide__slide">
+                                    <img src="{{ image.image.url }}" alt="Image for {{ product.name }}"
+                                         class="object-cover object-center">
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-1 lg:col-span-2">
+                <div class="flex flex-col space-y-4">
+                    <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
+                        {{ product.name }}
+                    </h1>
+                    <p class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
+                        {{ product.get_price }}
+                    </p>
+
+                    <div>
+                        <a href="{% url 'shop:add_to_cart' product.id %}" class="btn btn-gradient-primary max-w-none lg:max-w-[150px]">
+                            <i class="fa-solid fa-cart-plus"></i>
+                            {% translate 'Order Now' %}
+                        </a>
+                    </div>
+                </div>
+                <hr class="my-6 md:my-8 border-gray-200 dark:border-gray-800"/>
+
+                <p class="mb-6 text-gray-500 dark:text-gray-400">
+                    {{ product.description|safe }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </section>
+{% endblock %}

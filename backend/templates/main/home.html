@@ -1,0 +1,436 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block content %}
+    <!-- Hero Section -->
+    <section class="relative h-[600px] flex justify-center items-start py-6">
+        <div class="container grid grid-cols-1 lg:grid-cols-4 h-full">
+            <!-- Left Side with Text Content -->
+            <div class="col-span-1 lg:col-span-2 h-full flex flex-col justify-center px-6">
+                <h1 class="text-4xl font-bold mb-4">
+                    Protect What
+                    <span class="underline decoration-primary-600 decoration-8">Matters</span>
+                    with <br/>Defensive Eye
+                </h1>
+                <p class="text-lg mb-6">
+                    Keep your personal space, home, and business safe with affordable, high-quality security cameras.
+                    Our easy-to-use cameras stream live to our secure servers, and you can manage them from your mobile
+                    or web app—anytime, anywhere.
+                </p>
+                <div class="space-x-4 flex justify-start">
+                    <a href="#cta" class="btn btn-gradient-primary ">Buy Defensive Eye</a>
+                    <a href="#features" class="btn btn-gradient-secondary">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Right Side with Image -->
+            <div class="relative col-span-1 lg:col-span-2 h-full flex justify-center items-center">
+                <img src="{% static 'img/camera-1.png' %}" class="max-w-md h-auto object-cover rounded-lg z-10"
+                     alt="Description of the image">
+                <span class="absolute rounded-full w-[350px] h-[350px] bg-primary-500/15"></span>
+                <span class="absolute rounded-full w-[400px] h-[400px] bg-primary-500/15"></span>
+                <span class="absolute rounded-full w-[450px] h-[450px] bg-primary-500/15"></span>
+            </div>
+        </div>
+        <span class="absolute top-1/2 left-5 rounded-full w-[250px] h-[250px] bg-secondary-500/15 -z-10"></span>
+    </section>
+    <section class="h-[300px] flex justify-center items-start py-6 my-12">
+        <div class="h-full max-w-7xl bg-white shadow-lg rounded-full grid grid-cols-3 place-content-center p-8">
+            <div class="col-span-1 h-full px-4 text-center">
+                <div class="text-3xl text-primary-500 mb-4">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Easy Setup</h3>
+                <p class="text-gray-700">
+                    Simply plug in your camera, connect it to your Wi-Fi, and you're ready to go. No complicated
+                    installation required.
+                </p>
+            </div>
+            <div class="col-span-1 h-full border-l px-4 text-center">
+                <div class="text-3xl text-primary-500 mb-4">
+                    <i class="fa-solid fa-lock-alt"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Manage on the Go</h3>
+                <p class="text-gray-700">
+                    Use our mobile app to control and monitor your cameras in real-time, whether you're at home or on
+                    the move.
+                </p>
+            </div>
+            <div class="col-span-1 h-full border-l px-4 text-center">
+                <div class="text-3xl text-primary-500 mb-4">
+                    <i class="fa-solid fa-mobile-alt"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Secure Your Space</h3>
+                <p class="text-gray-700">
+                    Our cameras provide 24/7 surveillance with live streaming, automatic alerts, and motion detection
+                    to ensure your property is always protected.
+                </p>
+
+            </div>
+        </div>
+    </section>
+    <section class="flex justify-center items-start py-12 my-12">
+        <div class="container grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Left Section: Introduction Text -->
+            <div class="col-span-1 flex flex-col justify-center text-center lg:text-left">
+                <h2 class="text-3xl font-bold mb-4 text-primary-500">Welcome to Defensive Eye</h2>
+                <p class="text-lg text-gray-700 mb-6">
+                    At <span class="font-semibold text-primary-500">Defensive Eye</span>, we're driven by a singular
+                    goal: to make security simple, accessible, and reliable for everyone. Whether you're protecting your
+                    home, your business, or your loved ones, we provide advanced security solutions that combine
+                    cutting-edge technology with ease of use.
+                </p>
+                <p class="text-lg text-gray-700 mb-6">
+                    Our high-quality security cameras and surveillance systems are designed to provide peace of mind.
+                    You can monitor your property 24/7 from anywhere—whether you're at home, at work, or on the go. With
+                    Defensive Eye, you're always in control, ensuring that your property is safe and secure at all
+                    times.
+                </p>
+                <p class="text-lg text-gray-700 mb-6">
+                    But we don’t just stop at providing cameras; we provide a complete security experience. With our
+                    intuitive mobile app, you can easily set up, manage, and monitor your cameras in real time, all
+                    while enjoying seamless integration with cloud storage and advanced motion detection features.
+                </p>
+                <p class="text-lg text-gray-700 mb-6">
+                    We're not just about technology—at Defensive Eye, we care about building relationships with our
+                    customers. We're here to support you at every step, ensuring that your security system fits your
+                    unique needs and keeps you connected to what matters most.
+                </p>
+            </div>
+
+            <!-- Right Section: Image or Video -->
+            <div class="col-span-1 flex justify-center items-center">
+                <img src="{% static 'img/video-placeholder.jpg' %}" alt="About Defensive Eye"
+                     class="max-w-md h-auto object-cover rounded-lg shadow-lg">
+            </div>
+        </div>
+    </section>
+    <section class=" dark:bg-gray-900">
+        <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+            <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
+                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Designed for
+                    business teams like yours</h2>
+                <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">Here at Flowbite we focus on
+                    markets where technology, innovation, and capital can unlock long-term value and drive economic
+                    growth.</p>
+            </div>
+            <div class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
+                <!-- Pricing Card -->
+                <div class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
+                    <h3 class="mb-4 text-2xl font-semibold">Starter</h3>
+                    <p class="font-light text-gray-500 sm:text-lg dark:text-gray-400">Best option for personal use & for
+                        your next project.</p>
+                    <div class="flex justify-center items-baseline my-8">
+                        <span class="mr-2 text-5xl font-extrabold">$29</span>
+                        <span class="text-gray-500 dark:text-gray-400">/month</span>
+                    </div>
+                    <!-- List -->
+                    <ul role="list" class="mb-8 space-y-4 text-left">
+                        <li class="flex items-center space-x-3">
+                            <!-- Icon -->
+                            <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Individual configuration</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <!-- Icon -->
+                            <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                            <span>No setup, or hidden fees</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <!-- Icon -->
+                            <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Team size: <span class="font-semibold">1 developer</span></span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <!-- Icon -->
+                            <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Premium support: <span class="font-semibold">6 months</span></span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <!-- Icon -->
+                            <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Free updates: <span class="font-semibold">6 months</span></span>
+                        </li>
+                    </ul>
+                    <a href="#"
+                       class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">Get
+                        started</a>
+                </div>
+                <!-- Pricing Card -->
+                <div class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
+                    <h3 class="mb-4 text-2xl font-semibold">Company</h3>
+                    <p class="font-light text-gray-500 sm:text-lg dark:text-gray-400">Relevant for multiple users,
+                        extended & premium support.</p>
+                    <div class="flex justify-center items-baseline my-8">
+                        <span class="mr-2 text-5xl font-extrabold">$99</span>
+                        <span class="text-gray-500 dark:text-gray-400">/month</span>
+                    </div>
+                    <!-- List -->
+                    <ul role="list" class="mb-8 space-y-4 text-left">
+                        <li class="flex items-center space-x-3">
+                            <!-- Icon -->
+                            <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Individual configuration</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <!-- Icon -->
+                            <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                            <span>No setup, or hidden fees</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <!-- Icon -->
+                            <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Team size: <span class="font-semibold">10 developers</span></span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <!-- Icon -->
+                            <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Premium support: <span class="font-semibold">24 months</span></span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <!-- Icon -->
+                            <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Free updates: <span class="font-semibold">24 months</span></span>
+                        </li>
+                    </ul>
+                    <a href="#"
+                       class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">Get
+                        started</a>
+                </div>
+                <!-- Pricing Card -->
+                <div class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
+                    <h3 class="mb-4 text-2xl font-semibold">Enterprise</h3>
+                    <p class="font-light text-gray-500 sm:text-lg dark:text-gray-400">Best for large scale uses and
+                        extended redistribution rights.</p>
+                    <div class="flex justify-center items-baseline my-8">
+                        <span class="mr-2 text-5xl font-extrabold">$499</span>
+                        <span class="text-gray-500 dark:text-gray-400">/month</span>
+                    </div>
+                    <!-- List -->
+                    <ul role="list" class="mb-8 space-y-4 text-left">
+                        <li class="flex items-center space-x-3">
+                            <!-- Icon -->
+                            <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Individual configuration</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <!-- Icon -->
+                            <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                            <span>No setup, or hidden fees</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <!-- Icon -->
+                            <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Team size: <span class="font-semibold">100+ developers</span></span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <!-- Icon -->
+                            <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Premium support: <span class="font-semibold">36 months</span></span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <!-- Icon -->
+                            <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Free updates: <span class="font-semibold">36 months</span></span>
+                        </li>
+                    </ul>
+                    <a href="#"
+                       class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">Get
+                        started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section
+            class="flex justify-center flex-col items-center relative text-white bg-cover bg-center py-12 my-12 after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-black/50"
+            style="background-image: url('{% static 'img/person-holding-mobile-phone-with-high-tech-application-smart-house-features-controlling-lights-wi.jpg' %}')"
+    >
+        <div class="z-50 flex justify-center flex-col items-center">
+            <h2 class="text-3xl font-bold mb-6">Ready to Protect What Matters?</h2>
+            <p class="text-lg mb-6">Get started with Defensive Eye today and enjoy peace of mind with the best security
+                cameras in the market.</p>
+            <a href="#buy-now" class="btn btn-gradient-primary max-w-xs btn-lg">Buy Defensive Eye Now</a>
+        </div>
+
+    </section>
+    <section class="flex justify-center items-start py-6 my-12">
+        <div class="container max-w-screen-xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0">
+            <!-- Existing Features -->
+            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full border-r border-b p-4 text-center">
+                <div class="text-3xl text-primary-500 mb-4">
+                    <i class="fas fa-dollar"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Affordable</h3>
+                <p class="text-gray-700">
+                    Get high-quality security without breaking the bank. No hidden fees, no overpriced cameras.
+                </p>
+            </div>
+            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full border-r border-b p-4 text-center">
+                <div class="text-3xl text-primary-500 mb-4">
+                    <i class="fa-solid fa-lock-alt"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Reliable</h3>
+                <p class="text-gray-700">
+                    Our cameras are built to last, offering round-the-clock surveillance with zero downtime.
+                </p>
+            </div>
+            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full border-r border-b p-4 text-center">
+                <div class="text-3xl text-primary-500 mb-4">
+                    <i class="fa-solid fa-mobile-alt"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Easy to Use</h3>
+                <p class="text-gray-700">
+                    Control and manage your cameras easily through our intuitive mobile and web applications.
+                </p>
+            </div>
+            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full border-b p-4 text-center">
+                <div class="text-3xl text-primary-500 mb-4">
+                    <i class="fa-solid fa-shield-alt"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Security & Privacy</h3>
+                <p class="text-gray-700">
+                    Your data is always secure with end-to-end encryption and privacy-focused features.
+                </p>
+            </div>
+
+            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full border-t border-r p-4 text-center">
+                <div class="text-3xl text-primary-500 mb-4">
+                    <i class="fa-solid fa-cloud"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Cloud Storage</h3>
+                <p class="text-gray-700">
+                    Store your footage securely in the cloud, ensuring that all your recordings are safe, even if the
+                    camera is tampered with.
+                </p>
+            </div>
+            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full border-t border-r p-4 text-center">
+                <div class="text-3xl text-primary-500 mb-4">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Instant Alerts</h3>
+                <p class="text-gray-700">
+                    Receive push notifications instantly when motion is detected, keeping you updated and in control.
+                </p>
+            </div>
+            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full border-t border-r p-4 text-center">
+                <div class="text-3xl text-primary-500 mb-4">
+                    <i class="fa-solid fa-video"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">HD Quality</h3>
+                <p class="text-gray-700">
+                    Enjoy crystal-clear video quality in HD resolution, making sure every detail is captured.
+                </p>
+            </div>
+            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full border-t  p-4 text-center">
+                <div class="text-3xl text-primary-500 mb-4">
+                    <i class="fa-solid fa-sun"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Weatherproof</h3>
+                <p class="text-gray-700">
+                    Our cameras are built to withstand the elements, so you can rely on them year-round, no matter the
+                    weather.
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="bg-gray-100 py-12 flex justify-center items-start">
+        <div class="container text-center">
+            <h2 class="text-3xl font-bold mb-6">What Our Customers Are Saying</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <p class="text-lg italic mb-4">"Defensive Eye is a game-changer! The cameras are so easy to use, and
+                        the peace of mind is priceless."</p>
+                    <p class="font-semibold">John Doe</p>
+                    <p class="text-sm text-gray-500">Homeowner</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <p class="text-lg italic mb-4">"We installed Defensive Eye cameras at our office, and the
+                        reliability is unmatched. Highly recommend!"</p>
+                    <p class="font-semibold">Jane Smith</p>
+                    <p class="text-sm text-gray-500">Small Business Owner</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <p class="text-lg italic mb-4">"Affordable, easy to set up, and gives me the confidence I need to
+                        protect my family."</p>
+                    <p class="font-semibold">Mark Johnson</p>
+                    <p class="text-sm text-gray-500">Homeowner</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+{% endblock %}

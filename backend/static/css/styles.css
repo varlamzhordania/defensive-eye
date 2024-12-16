@@ -1,0 +1,233 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-gray-50 text-gray-900;
+        font-family: 'Inter', sans-serif;
+        font-style: normal;
+        font-weight: 400;
+    }
+}
+
+
+@layer components {
+    /* Base Button */
+    .btn {
+        @apply flex justify-center items-center gap-2 text-center text-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2;
+    }
+
+    .btn-primary {
+        @apply bg-primary-500 hover:bg-primary-600 focus:ring-4 focus:ring-primary-300 ;
+    }
+
+
+    .btn-secondary {
+        @apply text-gray-100 bg-secondary-500 border border-secondary-500 hover:border-secondary-600 hover:bg-secondary-600 focus:ring-4 focus:ring-secondary-500 ;
+    }
+
+    .btn-success {
+        @apply text-white bg-success-500 hover:bg-success-600 focus:ring-4 focus:ring-success-300;
+    }
+
+    .btn-danger {
+        @apply text-white bg-danger-500 hover:bg-danger-600 focus:ring-4 focus:ring-danger-300;
+    }
+
+    .btn-warning {
+        @apply text-white bg-warning-500 hover:bg-warning-600 focus:ring-4 focus:ring-warning-300;
+    }
+
+    .btn-info {
+        @apply text-white bg-info-500 hover:bg-info-600 focus:ring-4 focus:ring-info-300;
+    }
+
+    .btn-light {
+        @apply text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2;
+    }
+
+    /*.btn-dark {*/
+    /*    @apply text-white bg-dark-500 hover:bg-dark-600 focus:ring-4 focus:ring-dark-300;*/
+    /*}*/
+    .btn-pill {
+        @apply rounded-full text-sm px-5 py-2.5 me-2 mb-2;
+    }
+
+
+    /* Size Variants */
+    .btn-xs {
+        @apply px-3 py-2 text-xs font-medium;
+    }
+
+    .btn-sm {
+        @apply px-3 py-2 text-sm font-medium;
+    }
+
+    .btn-base {
+        @apply px-5 py-2.5 text-sm font-medium;
+    }
+
+    .btn-lg {
+        @apply px-5 py-3 text-base font-medium;
+    }
+
+    .btn-xl {
+        @apply px-6 py-3.5 text-base font-medium;
+    }
+
+    .btn-disabled {
+        @apply text-white cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center;
+    }
+
+    /* Outline Buttons */
+    .btn-outline-primary {
+        @apply text-primary-700 border border-primary-700 hover:text-white hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300;
+    }
+
+    .btn-outline-secondary {
+        @apply text-secondary-700 border border-secondary-700 hover:text-white hover:bg-secondary-700 focus:ring-4 focus:outline-none focus:ring-secondary-300;
+    }
+
+    /* Gradient Buttons */
+    .btn-gradient-primary {
+        @apply text-white bg-gradient-to-r from-primary-500 to-primary-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-primary-300;
+    }
+
+    .btn-gradient-secondary {
+        @apply text-white bg-gradient-to-r from-secondary-500 to-secondary-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-secondary-300;
+    }
+
+    /* Base Badge */
+    .badge {
+        @apply inline-block text-xs font-medium rounded-full px-3 py-1;
+    }
+
+    /* Success Badge */
+    .badge-success {
+        @apply bg-success-500 text-white;
+    }
+
+    /* Warning Badge */
+    .badge-warning {
+        @apply bg-warning-500 text-white;
+    }
+
+    /* Info Badge */
+    .badge-info {
+        @apply bg-info-500 text-white;
+    }
+
+    /* Error Badge */
+    .badge-danger {
+        @apply bg-danger-500 text-white;
+    }
+
+    .link {
+        @apply block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700
+    }
+
+    .link.active {
+        @apply text-white bg-primary-700 lg:bg-transparent lg:text-primary-700 dark:text-white
+    }
+
+    .input-label {
+        @apply block mb-2 text-sm font-medium text-gray-900 dark:text-white
+    }
+
+    .form-control {
+        @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+    }
+
+    .toast {
+        @apply
+        border-2 fixed top-5 right-5 flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800;
+        z-index: 1000;
+    }
+
+    .toast.toast-danger {
+        @apply
+        border-danger-500
+    }
+
+    .toast-danger .toast-icon {
+        @apply
+        inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-danger-500 bg-danger-100 rounded-lg dark:bg-danger-800 dark:text-danger-200
+    }
+
+    .toast.toast-success {
+        @apply
+        border-success-500
+    }
+
+    .toast-success .toast-icon {
+        @apply
+        inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-success-500 bg-success-100 rounded-lg dark:bg-success-800 dark:text-success-200
+    }
+
+    .toast.toast-warning {
+        @apply
+        border-warning-500
+    }
+
+    .toast-warning .toast-icon {
+        @apply
+        inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-warning-800 dark:text-warning-300
+    }
+
+    .toast.toast-info {
+        @apply
+        border-info-500
+    }
+
+    .toast-info .toast-icon {
+        @apply
+        inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-info-500 bg-info-100 rounded-lg dark:bg-info-800 dark:text-info-200
+    }
+
+    .mega-menu {
+        @apply
+        absolute hidden w-full h-[300px] bg-white shadow-lg rounded-b-lg z-20;
+        top: calc(100% + 12px);
+        left: 0;
+    }
+
+    .mega-menu.show {
+        @apply block
+    }
+
+    .card {
+        @apply max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700;
+    }
+
+}
+
+/* Dark Mode Adjustments */
+@media (prefers-color-scheme: dark) {
+    .btn,
+    .btn-primary,
+    .btn-secondary,
+    .btn-success,
+    .btn-danger,
+    .btn-warning,
+    .btn-info,
+    .btn-light,
+        /*.btn-dark,*/
+    .btn-pill,
+    .btn-pill-secondary,
+    .btn-xs,
+    .btn-sm,
+    .btn-base,
+    .btn-lg,
+    .btn-xl,
+    .btn-disabled,
+    .btn-outline-primary,
+    .btn-outline-secondary,
+    .btn-gradient-primary,
+    .btn-gradient-secondary {
+        background-color: theme('colors.primary.600');
+    }
+}

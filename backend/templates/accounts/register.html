@@ -1,0 +1,57 @@
+{% extends 'web/base.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% block content %}
+    <section class="h-dvh flex justify-center items-center">
+        <div class="bg-white shadow-lg p-6 rounded-lg w-full max-w-lg">
+            <h1 class="text-2xl font-bold mb-6">{% translate 'Create an account' %}</h1>
+            <form action="{% url 'accounts:register' %}" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+                <div class="flex flex-col mb-4">
+                    <label for="{{ form.email.id_for_label }}" class="input-label">{{ form.email.label }}</label>
+                    {{ form.email|add_class:"form-control" }}
+                    <small class="text-danger-500">{{ form.email.errors }}</small>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div class="flex flex-col mb-4">
+                        <label for="{{ form.first_name.id_for_label }}"
+                               class="input-label">{{ form.first_name.label }}</label>
+                        {{ form.first_name|add_class:"form-control" }}
+                        <small class="text-danger-500">{{ form.first_name.errors }}</small>
+                    </div>
+                    <div class="flex flex-col mb-4">
+                        <label for="{{ form.last_name.id_for_label }}"
+                               class="input-label">{{ form.last_name.label }}</label>
+                        {{ form.last_name|add_class:"form-control" }}
+                        <small class="text-danger-500">{{ form.last_name.errors }}</small>
+                    </div>
+                </div>
+
+                <div class="flex flex-col mb-4">
+                    <label for="{{ form.password1.id_for_label }}"
+                           class="input-label">{{ form.password1.label }}</label>
+                    {{ form.password1|add_class:"form-control"|attr:"placeholder:••••••••" }}
+                    <small class="text-danger-500">{{ form.password1.errors }}</small>
+                    <div class="text-xs p-2 bg-gray-100 rounded-lg my-2">
+                        {{ form.password1.help_text }}
+                    </div>
+                </div>
+                <div class="flex flex-col mb-4">
+                    <label for="{{ form.password2.id_for_label }}"
+                           class="input-label">{{ form.password2.label }}</label>
+                    {{ form.password2|add_class:"form-control"|attr:"placeholder:••••••••" }}
+                    <small class="text-danger-500">{{ form.password2.errors }}</small>
+                </div>
+                <div class="mb-4">
+                    <button class="btn btn-gradient-primary w-full" type="submit">{% translate 'Sign Up' %}</button>
+                </div>
+                <div>
+                    <p class="text-gray-500 font-medium">Already have an account?
+                        <a href="{% url 'accounts:login' %}"
+                           class="text-primary-800 text-md">{% translate 'Login here' %}</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

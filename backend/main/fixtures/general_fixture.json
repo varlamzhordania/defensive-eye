@@ -1,0 +1,183 @@
+[
+  {
+    "model": "main.plansitem",
+    "pk": 1,
+    "fields": {
+      "name": "Basic Streaming",
+      "description": "Basic video streaming with standard resolution."
+    }
+  },
+  {
+    "model": "main.plansitem",
+    "pk": 2,
+    "fields": {
+      "name": "HD Streaming",
+      "description": "High-definition video streaming for clear visuals."
+    }
+  },
+  {
+    "model": "main.plansitem",
+    "pk": 3,
+    "fields": {
+      "name": "Unlimited Streaming",
+      "description": "Unlimited streaming hours with multi-camera support."
+    }
+  },
+  {
+    "model": "main.plans",
+    "pk": 1,
+    "fields": {
+      "name": "Personal Plan",
+      "slug": "personal-plan",
+      "description": "Perfect for personal use with limited streaming.",
+      "price": "10.00",
+      "items": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "main.plans",
+    "pk": 2,
+    "fields": {
+      "name": "Home Plan",
+      "slug": "home-plan",
+      "description": "For home users with HD streaming and up to 3 cameras.",
+      "price": "20.00",
+      "items": [
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "main.plans",
+    "pk": 3,
+    "fields": {
+      "name": "Company Plan",
+      "slug": "company-plan",
+      "description": "For companies with multiple cameras and unlimited streaming.",
+      "price": "50.00",
+      "items": [
+        3
+      ]
+    }
+  },
+  {
+    "model": "main.products",
+    "pk": 1,
+    "fields": {
+      "name": "Personal Security Camera",
+      "slug": "personal-security-camera",
+      "description": "Compact and portable camera perfect for personal use.",
+      "type": "PERSONAL",
+      "price": "100.00"
+    }
+  },
+  {
+    "model": "main.products",
+    "pk": 2,
+    "fields": {
+      "name": "Home Security Camera",
+      "slug": "home-security-camera",
+      "description": "High-definition security camera designed for home use.",
+      "type": "HOME",
+      "price": "150.00"
+    }
+  },
+  {
+    "model": "main.products",
+    "pk": 3,
+    "fields": {
+      "name": "Company Security Camera",
+      "slug": "company-security-camera",
+      "description": "Industrial-grade cameras suitable for company surveillance.",
+      "type": "COMPANY",
+      "price": "300.00"
+    }
+  },
+  {
+    "model": "main.productstock",
+    "pk": 1,
+    "fields": {
+      "product": 1,
+      "total_stock": 50,
+      "total_sold": 10
+    }
+  },
+  {
+    "model": "main.productstock",
+    "pk": 2,
+    "fields": {
+      "product": 2,
+      "total_stock": 30,
+      "total_sold": 5
+    }
+  },
+  {
+    "model": "main.productstock",
+    "pk": 3,
+    "fields": {
+      "product": 3,
+      "total_stock": 100,
+      "total_sold": 20
+    }
+  },
+  {
+    "model": "main.productmedia",
+    "pk": 1,
+    "fields": {
+      "product": 1,
+      "image": "products/personal_security_camera.jpg",
+      "is_featured": true
+    }
+  },
+  {
+    "model": "main.productmedia",
+    "pk": 2,
+    "fields": {
+      "product": 2,
+      "image": "products/home_security_camera.jpg",
+      "is_featured": true
+    }
+  },
+  {
+    "model": "main.productmedia",
+    "pk": 3,
+    "fields": {
+      "product": 3,
+      "image": "products/company_security_camera.jpg",
+      "is_featured": false
+    }
+  },
+  {
+    "model": "main.productregistered",
+    "pk": 1,
+    "fields": {
+      "product": 1,
+      "code": "ABC123XYZ",
+      "is_claimed": false,
+      "claimed_user": null
+    }
+  },
+  {
+    "model": "main.productregistered",
+    "pk": 2,
+    "fields": {
+      "product": 2,
+      "code": "DEF456UVW",
+      "is_claimed": true,
+      "claimed_user": 1
+    }
+  },
+  {
+    "model": "main.productregistered",
+    "pk": 3,
+    "fields": {
+      "product": 3,
+      "code": "GHI789RST",
+      "is_claimed": false,
+      "claimed_user": null
+    }
+  }
+]

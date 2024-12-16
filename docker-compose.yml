@@ -1,0 +1,76 @@
+services:
+  db:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ./docker.env
+    networks:
+      - mynetwork
+
+  redis:
+    image: redis:alpine
+    networks:
+      - mynetwork
+
+  web:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: >
+      bash -c "python manage.py runserver 0.0.0.0:8000"
+    #      bash -c "gunicorn --bind 0.0.0.0:8000 core.wsgi:application"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+      - redis
+    networks:
+      - mynetwork
+    env_file:
+      - ./docker.env
+    expose:
+      - 8000
+    ports:
+    - "8000:8000"
+
+  daphne:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: >
+      bash -c "daphne -u /app/daphne.sock core.asgi:application"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+      - redis
+    networks:
+      - mynetwork
+    env_file:
+      - ./docker.env
+    expose:
+      - 8001
+
+#  nginx:
+#    image: nginx:alpine
+#    volumes:
+#      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+#      - ./backend/static:/app/static
+#      - ./backend/media:/app/media
+#    ports:
+#      - "80:80"
+#    depends_on:
+#      - web
+#      - daphne
+#    env_file:
+#      - ./docker.env
+#    networks:
+#      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  postgres_data:

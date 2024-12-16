@@ -1,0 +1,36 @@
+{% extends 'web/base.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% block content %}
+    <section class="h-dvh flex justify-center items-center">
+        <div class="bg-white shadow-lg p-6 rounded-lg w-full max-w-lg">
+            <h1 class="text-2xl font-bold mb-6">{% translate 'Sign in to your account' %}</h1>
+            <form action="{% url 'accounts:login' %}" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+                <div class="flex flex-col mb-4">
+                    <label for="{{ form.email.id_for_label }}" class="input-label">{{ form.email.label }}</label>
+                    {{ form.email|add_class:"form-control" }}
+                    <small class="text-danger-500">{{ form.email.errors }}</small>
+                </div>
+                <div class="flex flex-col mb-4">
+                    <label for="{{ form.password.id_for_label }}" class="input-label">{{ form.password.label }}</label>
+                    {{ form.password|add_class:"form-control" }}
+                    <small class="text-danger-500">{{ form.password.errors }}</small>
+                </div>
+                <div class="mb-4">
+
+                    <a href="#" class="text-primary-800 hover:underline font-bold text-md">Forget Password</a>
+                </div>
+                <div class="mb-4">
+                    <button class="btn btn-gradient-primary w-full" type="submit">{% translate 'Sign In' %}</button>
+                </div>
+                <div>
+                    <p class="text-gray-500 font-medium">Don’t have an account yet?
+                        <a href="{% url 'accounts:register' %}"
+                           class="text-primary-800 text-md">{% translate 'Sign up' %}</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

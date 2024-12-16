@@ -1,0 +1,19 @@
+{% load i18n %}
+<div class="mega-menu" id="mega-menu">
+    <div class="grid grid-cols-1 lg:grid-cols-3 space-x-4 p-4">
+        {% for type,products in products_by_type.items %}
+            <div class="col-span-1">
+                <h3 class="text-green-900 font-bold bg-gray-100 py-1 px-2 text-lg">{{ type }}</h3>
+                <ul>
+                    {% for product in products %}
+                        <li class="px-2 my-2">
+                            <a href="{{ product.get_absolute_url }}" class="link hover:underline">
+                                {{ product.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+</div>

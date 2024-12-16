@@ -1,0 +1,181 @@
+{% extends 'web/base.html' %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block content %}
+    <form action="." method="post" enctype="multipart/form-data">
+        <section class="my-6 flex justify-center items-start min-h-dvh">
+            {% csrf_token %}
+            <div class="container grid grid-cols-1 lg:grid-cols-3 space-y-4 lg:space-y-0 lg:space-x-4 p-4">
+                <div class="col-span-1 lg:col-span-2 ">
+                    <div class="card max-w-none">
+                        <div class="w-full flex justify-center items-center my-12">
+                            <ol class="items-center flex w-full max-w-2xl text-center text-sm font-medium text-gray-500 dark:text-gray-400 sm:text-base ">
+                                <li class="after:border-1 flex items-center text-primary-700 after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200 dark:text-primary-500 dark:after:border-gray-700 sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-10">
+                        <span class="flex items-center after:mx-2 after:text-gray-200 after:content-['/'] dark:after:text-gray-500 sm:after:hidden">
+                            <i class="fa-light fa-shopping-cart mx-2 text-xl"></i>
+                          Cart
+                        </span>
+                                </li>
+                                <li class="after:border-1 flex items-center text-primary-700 after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200 dark:text-primary-500 dark:after:border-gray-700 sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-10">
+                                <span class="flex items-center after:mx-2 after:text-gray-200 after:content-['/'] dark:after:text-gray-500 sm:after:hidden">
+                                    <i class="fa-light fa-clipboard-list-check mx-2 text-xl"></i>
+                                    Checkout
+                                </span>
+                                </li>
+                                <li class="flex shrink-0 items-center">
+                                    <i class="fa-light fa-credit-card mx-2 text-xl"></i>
+                                    Payment
+                                </li>
+                            </ol>
+                        </div>
+                        <h3 class="text-2xl text-gray-900 font-semibold mb-4">{% translate 'Delivery Details' %}</h3>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div class="col-span-1">
+                                <label class="input-label"
+                                       for="{{ shipping_form.full_name.id_for_label }}">{{ shipping_form.full_name.label }}</label>
+                                {{ shipping_form.full_name|add_class:"form-control" }}
+                                <small class="text-gray-500 text-xs">{{ shipping_form.full_name.help_text }}</small>
+                                <small class="text-danger-500 text-xs">{{ shipping_form.full_name.errors }}</small>
+                            </div>
+                            <div class="col-span-1">
+                                <label class="input-label"
+                                       for="{{ shipping_form.email.id_for_label }}">{{ shipping_form.email.label }}</label>
+                                {{ shipping_form.email|add_class:"form-control" }}
+                                <small class="text-gray-500 text-xs">{{ shipping_form.email.help_text }}</small>
+                                <small class="text-danger-500 text-xs">{{ shipping_form.email.errors }}</small>
+                            </div>
+                            <div class="col-span-1">
+                                <label class="input-label"
+                                       for="{{ shipping_form.phone_number.id_for_label }}">{{ shipping_form.phone_number.label }}</label>
+                                <div class="flex gap-2 justify-start items-start">
+                                    {{ shipping_form.phone_number|add_class:"form-control" }}
+                                </div>
+                                <small class="text-gray-500 text-xs">{{ shipping_form.phone_number.help_text }}</small>
+                                <small class="text-danger-500 text-xs">{{ shipping_form.phone_number.errors }}</small>
+                            </div>
+
+                            <div class="col-span-1">
+                                <label class="input-label"
+                                       for="{{ shipping_form.country.id_for_label }}">{{ shipping_form.country.label }}</label>
+                                <div class="flex gap-2 justify-start items-start">
+                                    {{ shipping_form.country|add_class:"form-control" }}
+                                </div>
+                                <small class="text-gray-500 text-xs">{{ shipping_form.country.help_text }}</small>
+                                <small class="text-danger-500 text-xs">{{ shipping_form.country.errors }}</small>
+                            </div>
+                            <div class="col-span-1">
+                                <label class="input-label"
+                                       for="{{ shipping_form.state.id_for_label }}">{{ shipping_form.state.label }}</label>
+                                <div class="flex gap-2 justify-start items-start">
+                                    {{ shipping_form.state|add_class:"form-control" }}
+                                </div>
+                                <small class="text-gray-500 text-xs">{{ shipping_form.state.help_text }}</small>
+                                <small class="text-danger-500 text-xs">{{ shipping_form.state.errors }}</small>
+                            </div>
+                            <div class="col-span-1">
+                                <label class="input-label"
+                                       for="{{ shipping_form.city.id_for_label }}">{{ shipping_form.city.label }}</label>
+                                <div class="flex gap-2 justify-start items-start">
+                                    {{ shipping_form.city|add_class:"form-control" }}
+                                </div>
+                                <small class="text-gray-500 text-xs">{{ shipping_form.city.help_text }}</small>
+                                <small class="text-danger-500 text-xs">{{ shipping_form.city.errors }}</small>
+                            </div>
+                            <div class="col-span-1 lg:col-span-2">
+                                <label class="input-label"
+                                       for="{{ shipping_form.address_line1.id_for_label }}">{{ shipping_form.address_line1.label }}</label>
+                                <div class="flex gap-2 justify-start items-start">
+                                    {{ shipping_form.address_line1|add_class:"form-control" }}
+                                </div>
+                                <small class="text-gray-500 text-xs">{{ shipping_form.address_line1.help_text }}</small>
+                                <small class="text-danger-500 text-xs">{{ shipping_form.address_line1.errors }}</small>
+                            </div>
+                            <div class="col-span-1 lg:col-span-2">
+                                <label class="input-label"
+                                       for="{{ shipping_form.address_line2.id_for_label }}">{{ shipping_form.address_line2.label }}</label>
+                                <div class="flex gap-2 justify-start items-start">
+                                    {{ shipping_form.address_line2|add_class:"form-control" }}
+                                </div>
+                                <small class="text-gray-500 text-xs">{{ shipping_form.address_line2.help_text }}</small>
+                                <small class="text-danger-500 text-xs">{{ shipping_form.address_line2.errors }}</small>
+                            </div>
+                            <div class="col-span-1">
+                                <label class="input-label"
+                                       for="{{ shipping_form.postal_code.id_for_label }}">{{ shipping_form.postal_code.label }}</label>
+                                <div class="flex gap-2 justify-start items-start">
+                                    {{ shipping_form.postal_code|add_class:"form-control" }}
+                                </div>
+                                <small class="text-gray-500 text-xs">{{ shipping_form.postal_code.help_text }}</small>
+                                <small class="text-danger-500 text-xs">{{ shipping_form.postal_code.errors }}</small>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <h3 class="text-2xl text-gray-900 font-semibold">{% translate 'Payment' %}</h3>
+                        <div class="flex justify-start items-start mt-2 gap-4">
+                            <div class="card flex space-x-2 justify-start items-start">
+                                <input type="radio" name="payment_method" value="stripe" class="mt-1" checked>
+                                <div>
+                                    <span>Stripe</span><br/>
+                                    <small>{% translate 'Pay using stripe' %}</small>
+                                </div>
+                            </div>
+                            <div class="card flex space-x-2 justify-start items-start">
+                                <input type="radio" name="payment_method" value="paypal" class="mt-1" disabled>
+                                <div>
+                                    <span>Paypal(unavailable)</span><br/>
+                                    <small>{% translate 'Pay using paypal' %}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-1">
+                    <div class="card w-full">
+                        <h3 class="text-xl font-semibold">{% translate 'Order summery' %}</h3>
+                        <ul class="flex flex-col space-y-4 my-2">
+                            <li class="flex justify-between items-center">
+                                <span class="text-gray-500">
+                                    {% translate 'Original price' %}
+                                </span>
+                                <span class="text-gray-900 font-semibold">
+                                    {{ cart.get_display_price }}
+                                </span>
+                            </li>
+                            <li class="flex justify-between items-center">
+                                <span class="text-gray-500">
+                                    {% translate 'Shipment' %}
+                                </span>
+                                <span class="text-gray-900 font-semibold">
+                                    $0
+                                </span>
+                            </li>
+                            <li class="flex justify-between items-center">
+                                <span class="text-gray-500">
+                                    {% translate 'Saving' %}
+                                </span>
+                                <span class="text-gray-900 font-semibold">
+                                    $0
+                                </span>
+                            </li>
+                            <hr/>
+                            <li class="flex justify-between items-center">
+                                <span class="text-gray-500">
+                                    {% translate 'Total' %}
+                                </span>
+                                <span class="text-gray-900 font-semibold">
+                                    {{ cart.get_display_price }}
+                                </span>
+                            </li>
+                            <li>
+                                <button type="submit"
+                                        class="btn btn-gradient-primary w-full">{% translate 'Proceed to Payment' %}</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+{% endblock %}
