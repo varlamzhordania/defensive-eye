@@ -103,27 +103,27 @@
 
     /* Base Badge */
     .badge {
-        @apply inline-block text-xs font-medium rounded-full px-3 py-1;
+        @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-medium;
     }
 
     /* Success Badge */
     .badge-success {
-        @apply bg-success-500 text-white;
+        @apply bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300;
     }
 
     /* Warning Badge */
     .badge-warning {
-        @apply bg-warning-500 text-white;
+        @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300;
     }
 
     /* Info Badge */
     .badge-info {
-        @apply bg-info-500 text-white;
+        @apply bg-info-100 text-info-800;
     }
 
     /* Error Badge */
     .badge-danger {
-        @apply bg-danger-500 text-white;
+        @apply bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300;
     }
 
     .link {
@@ -201,6 +201,34 @@
 
     .card {
         @apply max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700;
+    }
+
+    .sidebar-link {
+        @apply flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700;
+    }
+
+    .sidebar-icon {
+        @apply text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white;
+    }
+
+    .table {
+        @apply w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400;
+    }
+
+    .table-head {
+        @apply text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400;
+    }
+
+    .table-cell {
+        @apply px-6 py-3;
+    }
+
+    .table-th {
+        @apply px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white;
+    }
+
+    .table-tr {
+        @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600;
     }
 
 }

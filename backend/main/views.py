@@ -2,8 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpRequest, HttpResponse
 
-from main.models import Products
-
+from main.models import Products, ProductRegistered
 
 
 def home_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
@@ -12,14 +11,6 @@ def home_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
         "title": "Defensive Eye Security",
     }
     return render(request, "main/home.html", context)
-
-
-@login_required
-def dashboard_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
-    context = {
-        "title": "Dashboard | Defensive Eye Security",
-    }
-    return render(request, "main/dashboard.html", context)
 
 
 def product_view(request: HttpRequest, slug, *args, **kwargs) -> HttpResponse:
@@ -32,3 +23,16 @@ def product_view(request: HttpRequest, slug, *args, **kwargs) -> HttpResponse:
 
     return render(request, "main/product.html", context)
 
+
+@login_required
+def dashboard_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
+    context = {
+        "title": "Dashboard | Defensive Eye Security",
+    }
+    return render(request, "main/dashboard.html", context)
+
+
+def camera_list_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
+    context = {}
+
+    return render(request)

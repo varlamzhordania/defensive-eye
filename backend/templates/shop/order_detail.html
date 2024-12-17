@@ -1,0 +1,210 @@
+{% extends 'web/base_dashboard.html' %}
+{% load i18n %}
+{% block dashboard_content %}
+    <section class="w-full py-6">
+        <ol class="flex justify-evenly items-center">
+            <!-- Step 1: Submit Order -->
+            <li class="flex flex-col justify-center items-center gap-2">
+                <i class="fa-light fa-shopping-cart text-3xl rounded-full
+            {% if order %}
+                bg-primary-50 p-4 text-primary-700
+            {% else %}
+                bg-gray-100 p-4 text-gray-700
+            {% endif %}">
+                </i>
+                <span class="text-lg text-gray-500 font-semibold">{% translate 'Submit order' %}</span>
+            </li>
+
+            <!-- Step 2: Complete Payment -->
+            <li class="flex flex-col justify-center items-center gap-2">
+                <i class="fa-light fa-credit-card text-3xl rounded-full
+            {% if order.have_been_paid %}
+                bg-primary-50 p-4 text-primary-700
+            {% else %}
+                bg-gray-100 p-4 text-gray-700
+            {% endif %}">
+                </i>
+                <span class="text-lg text-gray-500 font-semibold">{% translate 'Complete Payment' %}</span>
+            </li>
+
+            <!-- Step 3: Order Processing -->
+            <li class="flex flex-col justify-center items-center gap-2">
+                <i class="fa-light fa-cogs text-3xl rounded-full
+                {% if order.status == 'PROCESSING' or order.status == 'PENDING' %}
+                bg-primary-50 p-4 text-primary-700
+                {% elif order.status == 'CANCELED' %}
+                    bg-danger-50 p-4 text-danger-700
+            {% else %}
+                bg-gray-100 p-4 text-gray-700
+            {% endif %}">
+                </i>
+                <span class="text-lg text-gray-500 font-semibold">{% translate 'Processing' %}</span>
+            </li>
+
+            <!-- Step 4: Shipped -->
+            <li class="flex flex-col justify-center items-center gap-2">
+                <i class="fa-light fa-truck text-3xl rounded-full
+            {% if order.status == 'SENT_SHIPPING' %}
+                bg-primary-50 p-4 text-primary-700
+            {% else %}
+                bg-gray-100 p-4 text-gray-700
+            {% endif %}">
+                </i>
+                <span class="text-lg text-gray-500 font-semibold">{% translate 'Shipped' %}</span>
+            </li>
+
+            <!-- Step 5: Completed -->
+            <li class="flex flex-col justify-center items-center gap-2">
+                <i class="fa-light fa-check-circle text-3xl rounded-full
+            {% if order.status == 'COMPLETED' %}
+                bg-primary-50 p-4 text-primary-700
+            {% else %}
+                bg-gray-100 p-4 text-gray-700
+            {% endif %}">
+                </i>
+                <span class="text-lg text-gray-500 font-semibold">{% translate 'Completed' %}</span>
+            </li>
+        </ol>
+        <div class="my-12 relative w-full grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div class="col-span-1 lg:col-span-2">
+                <div class=" max-w-none">
+                    <ul class="space-y-4">
+                        {% for item in order.get_items %}
+                            <li class="flex gap-4 items-center border-b-2 border-gray-200 pb-4">
+                                <!-- Product Image -->
+                                <div class="flex-shrink-0">
+                                    <a href="{{ item.product.get_absolute_url }}">
+                                        <img src="{{ item.product.get_featured_media }}" alt="{{ item.product }}"
+                                             class="w-16 h-16 object-cover rounded-lg shadow-sm"/>
+                                    </a>
+                                </div>
+                                <!-- Product Name -->
+                                <div class="flex-grow">
+                                    <a href="{{ item.product.get_absolute_url }}">
+                                        <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ item.product }}</p>
+                                    </a>
+                                </div>
+                                <!-- Quantity -->
+                                <div class="w-16 text-center">
+                                    <span class="text-sm text-gray-600 dark:text-gray-300">x{{ item.quantity }}</span>
+                                </div>
+                                <!-- Total Price -->
+                                <div class="w-24 text-right">
+                                    <span class="text-sm text-gray-900 dark:text-white font-medium">${{ item.total_price }}</span>
+                                </div>
+                            </li>
+                        {% empty %}
+                            <li class="text-gray-500 dark:text-gray-400">{% translate "No items in this order" %}</li>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+            </div>
+            <div class="col-span-1 flex flex-col gap-4">
+                <div class="card bg-gray-100 shadow-none max-w-none p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{% translate 'Order Details' %}</h3>
+
+                    <!-- Order Information -->
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{% translate 'Order ID' %}:</p>
+                            <p class="text-sm text-gray-900 dark:text-white font-medium">#{{ order.id }}</p>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{% translate 'Order Date' %}:</p>
+                            <p class="text-sm text-gray-900 dark:text-white">{{ order.created_at }}</p>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{% translate 'Total Price' %}:</p>
+                            <p class="text-sm text-gray-900 dark:text-white font-medium">
+                                ${{ order.total_price|floatformat:2 }}</p>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{% translate 'Payment Method' %}:</p>
+                            <p class="text-sm text-gray-900 dark:text-white font-medium">
+                                {% if order.transactions.last %}
+                                    {{ order.transactions.last.payment_method }}
+                                {% else %}
+                                    {% translate 'Not provided' %}
+                                {% endif %}
+                            </p>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{% translate 'Status' %}:</p>
+                            <p class="text-sm text-gray-900 dark:text-white">
+                                <span class="badge
+                                    {% if order.status == 'COMPLETED' %}
+                                        badge-success
+                                    {% elif order.status == 'CANCELED' %}
+                                        badge-danger
+                                    {% else %}
+                                        badge-warning
+                                    {% endif %}">
+                                    {{ order.get_status_display }}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-gray-100 shadow-none max-w-none p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{% translate 'Shipping Address' %}</h3>
+                    <!-- Shipping Address Details -->
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{% translate 'Receiver Name' %}:</p>
+                            <p class="text-sm text-gray-900 dark:text-white font-medium">{{ order.shipping_address.full_name }}</p>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{% translate 'Receiver Email' %}:</p>
+                            <p class="text-sm text-gray-900 dark:text-white">{{ order.shipping_address.email }}</p>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{% translate 'Address Line 1' %}:</p>
+                            <p class="text-sm text-gray-900 dark:text-white">{{ order.shipping_address.address_line1 }}</p>
+                        </div>
+
+                        {% if order.shipping_address.address_line2 %}
+                            <div class="flex justify-between items-center">
+                                <p class="text-sm text-gray-600 dark:text-gray-400">{% translate 'Address Line 2' %}:</p>
+                                <p class="text-sm text-gray-900 dark:text-white">{{ order.shipping_address.address_line2 }}</p>
+                            </div>
+                        {% endif %}
+
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{% translate 'City' %}:</p>
+                            <p class="text-sm text-gray-900 dark:text-white">{{ order.shipping_address.city }}</p>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{% translate 'State/Province' %}:</p>
+                            <p class="text-sm text-gray-900 dark:text-white">{{ order.shipping_address.state }}</p>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{% translate 'Postal Code' %}:</p>
+                            <p class="text-sm text-gray-900 dark:text-white">{{ order.shipping_address.postal_code }}</p>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{% translate 'Country' %}:</p>
+                            <p class="text-sm text-gray-900 dark:text-white">{{ order.shipping_address.country.name }}</p>
+                        </div>
+
+                        {% if order.shipping_address.phone_number %}
+                            <div class="flex justify-between items-center">
+                                <p class="text-sm text-gray-600 dark:text-gray-400">{% translate 'Phone Number' %}:</p>
+                                <p class="text-sm text-gray-900 dark:text-white">{{ order.shipping_address.phone_number }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

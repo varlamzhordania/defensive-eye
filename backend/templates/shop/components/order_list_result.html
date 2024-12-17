@@ -1,0 +1,100 @@
+{% load i18n %}
+<section id="order-section" class="w-full card max-w-none">
+    <h1 class="text-2xl font-semibold text-gray-600">{% translate 'My Orders' %}</h1>
+    {% if orders %}
+        <div class="mt-6 flow-root sm:mt-8">
+            <table class="table">
+                <thead class="table-head">
+                <tr>
+                    <th scope="col"
+                        class="table-cell">
+                        {% translate "Order ID" %}
+                    </th>
+                    <th scope="col"
+                        class="table-cell">
+                        {% translate "Date" %}
+                    </th>
+                    <th scope="col"
+                        class="table-cell">
+                        {% translate "Price" %}
+                    </th>
+                    <th scope="col"
+                        class="table-cell">
+                        {% translate "Status" %}
+                    </th>
+                    <th scope="col"
+                        class="table-cell">
+                        {% translate "Actions" %}
+                    </th>
+                </tr>
+                </thead>
+                <tbody id="table-body">
+                {% for order in orders %}
+                    <tr class="table-tr">
+                        <th class="table-th">
+                            <a href="{% url 'shop:order_details' order.id %}"
+                               class="hover:underline">#{{ order.id }}</a>
+                        </th>
+                        <td class="table-cell">
+                            {{ order.created_at|date:"d/m/Y" }}
+                        </td>
+                        <td class="table-cell">
+                            ${{ order.total_price }}
+                        </td>
+                        <td class="table-cell">
+                            <span class="badge
+                                {% if order.status == 'COMPLETED' %}
+                                    badge-success
+                                {% elif order.status == 'CANCELED' %}
+                                    badge-danger
+                                {% else %}
+                                    badge-warning
+                                {% endif %}">
+                                {{ order.get_status_display }}
+                            </span>
+                        </td>
+                        <td class="table-cell">
+                            {% if order.status not in "CANCELED, COMPLETED" %}
+                                <form method="post" action="{% url 'shop:cancel_order' order.id %}" class="inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="text-red-600 hover:underline dark:text-red-500">
+                                        {% translate "Cancel" %}
+                                    </button>
+                                </form>
+                            {% endif %}
+                            <a href="{% url 'shop:order_details' order.id %}"
+                               class="ml-4 text-primary-600 hover:underline dark:text-primary-400">
+                                {% translate "View Details" %}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-6">
+            <div class="flex justify-between items-center">
+                {% if orders.has_previous %}
+                    <button hx-get="?page={{ orders.previous_page_number }}" hx-target="#order-section"
+                            hx-swap="outerHTML"
+                            hx-push-url="true"
+                            class="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                        <i class="fa-solid fa-arrow-left me-2"></i>
+                        {% translate "Previous" %}
+                    </button>
+                {% endif %}
+                <span class="text-gray-500 text-sm">{% translate "Page" %} {{ orders.number }} {% translate "of" %} {{ orders.paginator.num_pages }}</span>
+                {% if orders.has_next %}
+                    <button hx-get="?page={{ orders.next_page_number }}" hx-target="#order-section" hx-swap="outerHTML"
+                            hx-push-url="true"
+                            class="flex items-center justify-center px-3 h-8 ms-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                        {% translate "Next" %}
+                        <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        <p>{% translate "You have no orders yet." %}</p>
+    {% endif %}
+</section>

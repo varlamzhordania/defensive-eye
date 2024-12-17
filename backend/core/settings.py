@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'import_export',
     "phonenumber_field",
     'django_countries',
+    'django_htmx',
     # Internal Apps
     'accounts.apps.AccountsConfig',
     'main.apps.MainConfig',
@@ -43,6 +44,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_htmx.middleware.HtmxMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'

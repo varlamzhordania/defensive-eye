@@ -3,10 +3,11 @@ import stripe
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.db import transaction
+from django.core.paginator import Paginator
 
 from main.models import Products
 from core.utils import fancy_message
@@ -17,6 +18,53 @@ from .helpers import handle_checkout_session_completed, handle_payment_intent_fa
     handle_payment_intent_succeeded
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
+
+@login_required
+def order_history_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
+    orders = Order.objects.filter(user=request.user)
+
+    paginator = Paginator(orders, 10)
+    page = request.GET.get('page', 1)
+
+    paged_orders = paginator.get_page(page)
+
+    context = {
+        "title": "Order history",
+        "orders": paged_orders,
+    }
+    if request.htmx:
+        return render(request, "shop/components/order_list_result.html", context)
+
+    return render(request, "shop/order_list.html", context)
+
+
+@login_required
+def order_confirm_view(request: HttpRequest, order_id: int, *args, **kwargs) -> HttpResponse:
+    order = get_object_or_404(Order, id=order_id)
+    context = {
+        "title": "Order confirmation",
+        "order": order,
+    }
+    return render(request, "shop/order_confirmation.html", context)
+
+
+@login_required
+def cancel_order_view(request: HttpRequest, order_id: int):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    if order.status not in ["CANCELED", "COMPLETED"]:
+        order.update_status(Order.StatusChoices.CANCELED)
+        fancy_message(request, "Order canceled successfully.")
+    else:
+        fancy_message(request, "This order cannot be canceled.")
+    return redirect('shop:order_history')
+
+
+@login_required
+def order_detail_view(request: HttpRequest, order_id: int):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    context = {"order": order}
+    return render(request, "shop/order_detail.html", context)
 
 
 @login_required
@@ -145,8 +193,8 @@ def create_stripe_session_view(request: HttpRequest, order_id: int, *args, **kwa
         line_items=line_items,
         mode='payment',
         customer_email=order.user.email,
-        success_url=request.build_absolute_uri('/payment-success/'),
-        cancel_url=request.build_absolute_uri('/payment-cancel/'),
+        success_url=request.build_absolute_uri(reverse("shop:order_confirm", kwargs={"order_id": order.id})),
+        cancel_url=request.build_absolute_uri(reverse("shop:cart_detail")),
         client_reference_id=str(order.id),
     )
 

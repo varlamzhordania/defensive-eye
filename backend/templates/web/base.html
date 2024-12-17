@@ -12,13 +12,13 @@
 </head>
 <body>
 {% include 'web/components/toast.html' %}
-{% include 'web/components/navbar.html' %}
-{% block content %}
-
+{% block navbar %}
+    {% include 'web/components/navbar.html' %}
 {% endblock %}
-{% include 'web/components/footer.html' %}
-<!-- Add JavaScript files -->
-
+{% block content %}{% endblock %}
+{% block footer %}
+    {% include 'web/components/footer.html' %}
+{% endblock %}
 <script src="{% static 'dist/js/base-bundle.js' %}"></script>
 {% block scripts %}{% endblock %}
 </body>

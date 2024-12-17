@@ -129,6 +129,14 @@ class Order(BaseModel):
         self.status = new_status
         self.save(update_fields=["status"])
 
+    @property
+    def have_been_paid(self):
+        transactions = self.transactions.last()
+        return True if transactions.status == Transaction.TransactionStatusChoices.COMPLETED else False
+
+    def get_items(self):
+        return self.items.filter(is_active=True)
+
 
 class OrderItem(BaseModel):
     order = models.ForeignKey(
