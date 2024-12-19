@@ -9,13 +9,14 @@ from django.views.decorators.http import require_POST
 from django.db import transaction
 from django.core.paginator import Paginator
 
-from main.models import Products
+from main.models import Products, Plans
 from core.utils import fancy_message
 
 from .models import Order, OrderItem, CartItem, Cart, Transaction
 from .form import ShippingAddressForm
 from .helpers import handle_checkout_session_completed, handle_payment_intent_failed, handle_payment_intent_canceled, \
-    handle_payment_intent_succeeded
+    handle_payment_intent_succeeded, handle_subscription_created, handle_subscription_updated, \
+    handle_subscription_deleted
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -33,6 +34,7 @@ def order_history_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
         "title": "Order history",
         "orders": paged_orders,
     }
+
     if request.htmx:
         return render(request, "shop/components/order_list_result.html", context)
 
@@ -170,6 +172,16 @@ def checkout_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
 def create_stripe_session_view(request: HttpRequest, order_id: int, *args, **kwargs) -> HttpResponse:
     order = get_object_or_404(Order, id=order_id, user=request.user)
 
+    if not request.user.stripe_customer_id:
+        customer = stripe.Customer.create(
+            email=request.user.email,
+            name=f"{request.user.get_full_name}"
+        )
+        customer_id = customer['id']
+        request.user.stripe_customer_id = customer_id
+        request.user.save(update_fields=['stripe_customer_id'])
+
+    # Build line items for the session
     line_items = []
     for item in order.items.all():
         line_items.append(
@@ -180,7 +192,6 @@ def create_stripe_session_view(request: HttpRequest, order_id: int, *args, **kwa
                         'name': item.product.name,
                         'description': item.product.description,
                         'images': [request.build_absolute_uri(item.product.get_featured_media)],
-
                     },
                     'unit_amount': int(item.product.price * 100),  # Convert to cents
                 },
@@ -192,7 +203,7 @@ def create_stripe_session_view(request: HttpRequest, order_id: int, *args, **kwa
         payment_method_types=['card'],
         line_items=line_items,
         mode='payment',
-        customer_email=order.user.email,
+        customer=request.user.stripe_customer_id,
         success_url=request.build_absolute_uri(reverse("shop:order_confirm", kwargs={"order_id": order.id})),
         cancel_url=request.build_absolute_uri(reverse("shop:cart_detail")),
         client_reference_id=str(order.id),
@@ -204,12 +215,39 @@ def create_stripe_session_view(request: HttpRequest, order_id: int, *args, **kwa
     return redirect(session.url)
 
 
+@login_required
+def create_subscription_session_view(request: HttpRequest, plan_id: int, *args, **kwargs) -> HttpResponse:
+    plan = get_object_or_404(Plans, id=plan_id)
+
+    if not request.user.stripe_customer_id:
+        customer = stripe.Customer.create(
+            email=request.user.email,
+            name=f"{request.user.get_full_name}"
+        )
+        customer_id = customer['id']
+        request.user.stripe_customer_id = customer_id
+        request.user.save(update_fields=['stripe_customer_id'])
+
+
+    session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=[{
+            'price': plan.stripe_price_id,
+            'quantity': 1,
+        }],
+        mode='subscription',
+        customer=request.user.stripe_customer_id,
+        success_url=request.build_absolute_uri(reverse('accounts:subscription_list')),
+        cancel_url=request.build_absolute_uri(reverse('accounts:subscription_list')),
+    )
+
+    return redirect(session.url)
+
+
 @csrf_exempt
 @require_POST
 def stripe_webhook_view(request: HttpRequest) -> JsonResponse:
-    """
-    Handle Stripe webhook events.
-    """
+
     payload = request.body
     sig_header = request.META.get('HTTP_STRIPE_SIGNATURE', '')
     endpoint_secret = settings.STRIPE_WEBHOOK_KEY
@@ -218,9 +256,9 @@ def stripe_webhook_view(request: HttpRequest) -> JsonResponse:
         event = stripe.Webhook.construct_event(
             payload, sig_header, endpoint_secret
         )
-    except ValueError as e:
+    except ValueError:
         return JsonResponse({'error': 'Invalid payload'}, status=400)
-    except stripe.error.SignatureVerificationError as e:
+    except stripe.error.SignatureVerificationError:
         return JsonResponse({'error': 'Invalid signature'}, status=400)
 
     event_type = event.get('type')
@@ -234,6 +272,12 @@ def stripe_webhook_view(request: HttpRequest) -> JsonResponse:
         handle_payment_intent_failed(data)
     elif event_type == 'payment_intent.canceled':
         handle_payment_intent_canceled(data)
+    elif event_type == 'customer.subscription.created':
+        handle_subscription_created(data)
+    elif event_type == 'customer.subscription.updated':
+        handle_subscription_updated(data)
+    elif event_type == 'customer.subscription.deleted':
+        handle_subscription_deleted(data)
 
     # Return a 200 response to acknowledge receipt of the event
     return JsonResponse({'status': 'success'}, status=200)

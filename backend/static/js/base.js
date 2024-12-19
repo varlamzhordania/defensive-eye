@@ -30,23 +30,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const showMegaMenu = () => {
-        if (megaMenu.classList.contains("show")) {
-            megaMenu.classList.remove("show");
-            megaMenuTrigger.classList.remove("active");
-        } else {
-            megaMenu.classList.add("show");
-            megaMenuTrigger.classList.add("active");
+        if (megaMenu) {
+            if (megaMenu.classList.contains("show")) {
+                megaMenu.classList.remove("show");
+                megaMenuTrigger.classList.remove("active");
+            } else {
+                megaMenu.classList.add("show");
+                megaMenuTrigger.classList.add("active");
+            }
         }
     };
 
     document.addEventListener("click", (e) => {
-        if (
-            megaMenu.classList.contains("show") &&
-            !megaMenu.contains(e.target) &&
-            !megaMenuTrigger.contains(e.target)
-        ) {
-            megaMenu.classList.remove("show");
-            megaMenuTrigger.classList.remove("active");
+        if (megaMenu) {
+            if (
+                megaMenu.classList.contains("show") &&
+                !megaMenu.contains(e.target) &&
+                !megaMenuTrigger.contains(e.target)
+            ) {
+                megaMenu.classList.remove("show");
+                megaMenuTrigger.classList.remove("active");
+            }
         }
     });
 
@@ -156,40 +160,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // === Product Page ===
-    const mainProductSlider = new Splide('#product-slider-main', {
-        fixedHeight: 500,
-        // type: 'fade',
-        heightRatio: 1,
-        pagination: false,
-        arrows: false,
-        cover: true,
-        gap: 10
-    });
-
-    const productThumbnailsSlider = new Splide('#product-thumbnail-slider', {
-        rewind: true,
-        fixedWidth: 80,
-        fixedHeight: 80,
-        isNavigation: true,
-        gap: 10,
-        focus: '',
-        pagination: false,
-        cover: true,
-        dragMinThreshold: {
-            mouse: 4,
-            touch: 10,
-        },
-        breakpoints: {
-            640: {
-                fixedWidth: 60,
-                fixedHeight: 60,
+    if (document.querySelector('#product-slider-main') && document.querySelector('#product-thumbnail-slider')) {
+        const mainProductSlider = new Splide('#product-slider-main', {
+            fixedHeight: 500,
+            // type: 'fade',
+            heightRatio: 1,
+            pagination: false,
+            arrows: false,
+            cover: true,
+            gap: 10
+        });
+        const productThumbnailsSlider = new Splide('#product-thumbnail-slider', {
+            rewind: true,
+            fixedWidth: 80,
+            fixedHeight: 80,
+            isNavigation: true,
+            gap: 10,
+            focus: '',
+            pagination: false,
+            cover: true,
+            dragMinThreshold: {
+                mouse: 4,
+                touch: 10,
             },
-        },
-    });
-
-    mainProductSlider.sync(productThumbnailsSlider);
-    mainProductSlider.mount();
-    productThumbnailsSlider.mount();
-
-
+            breakpoints: {
+                640: {
+                    fixedWidth: 60,
+                    fixedHeight: 60,
+                },
+            },
+        });
+        mainProductSlider.sync(productThumbnailsSlider);
+        mainProductSlider.mount();
+        productThumbnailsSlider.mount();
+    }
 });

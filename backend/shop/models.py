@@ -132,7 +132,10 @@ class Order(BaseModel):
     @property
     def have_been_paid(self):
         transactions = self.transactions.last()
-        return True if transactions.status == Transaction.TransactionStatusChoices.COMPLETED else False
+        if transactions:
+            return True if transactions.status == Transaction.TransactionStatusChoices.COMPLETED else False
+        else:
+            return False
 
     def get_items(self):
         return self.items.filter(is_active=True)

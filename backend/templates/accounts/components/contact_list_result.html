@@ -1,6 +1,12 @@
 {% load i18n %}
-<section id="cameras-section" class="w-full card max-w-none">
-    <h1 class="text-2xl font-semibold text-gray-600">{% translate 'My Cameras' %}</h1>
+<section id="contact-section" class="w-full card max-w-none">
+    <div class="flex justify-between">
+        <h1 class="text-2xl font-semibold text-gray-600">{% translate 'My Contacts' %}</h1>
+        <a href="{% url 'accounts:contact_create' %}" class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i>
+            {% translate 'Add Contact' %}
+        </a>
+    </div>
     <div class="mt-6 flow-root sm:mt-8 table-container">
         <table class="table">
             <thead class="table-head">
@@ -11,11 +17,11 @@
                 </th>
                 <th scope="col"
                     class="table-cell">
-                    {% translate "Product" %}
+                    {% translate "Name" %}
                 </th>
                 <th scope="col"
                     class="table-cell">
-                    {% translate "Code" %}
+                    {% translate "Phone" %}
                 </th>
                 <th scope="col"
                     class="table-cell">
@@ -24,22 +30,22 @@
             </tr>
             </thead>
             <tbody id="table-body">
-            {% for item in cameras %}
+            {% for item in contacts %}
                 <tr class="table-tr">
                     <th class="table-th">
-                        #{{ forloop.counter }}
+                        #{{ contacts.id }}
                     </th>
                     <td class="table-cell">
-                        {{ item.product }}
+                        {{ item.name }}
                     </td>
                     <td class="table-cell">
-                        {{ item.code }}
+                        {{ item.phone_number }}
                     </td>
                     <td class="table-cell">
-                        <div class="flex flex-row justify-start items-center">
-                            <a class="btn btn-secondary btn-xs hover:underline">Watch live</a>
-                            <a class="btn btn-secondary btn-xs hover:underline">Send SMS</a>
-                        </div>
+                        <a href="{% url 'accounts:contact_delete' item.id %}"
+                           class="ml-4 text-danger-600 hover:underline ">
+                            {% translate "Delete" %}
+                        </a>
                     </td>
                 </tr>
             {% endfor %}
@@ -48,8 +54,8 @@
     </div>
     <div class="mt-6">
         <div class="flex justify-between items-center">
-            {% if cameras.has_previous %}
-                <button hx-get="?page={{ cameras.previous_page_number }}" hx-target="#cameras-section"
+            {% if contacts.has_previous %}
+                <button hx-get="?page={{ contacts.previous_page_number }}" hx-target="#contact-section"
                         hx-swap="outerHTML"
                         hx-push-url="true"
                         class="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
@@ -57,9 +63,9 @@
                     {% translate "Previous" %}
                 </button>
             {% endif %}
-            <span class="text-gray-500 text-sm">{% translate "Page" %} {{ cameras.number }} {% translate "of" %} {{ cameras.paginator.num_pages }}</span>
-            {% if cameras.has_next %}
-                <button hx-get="?page={{ cameras.next_page_number }}" hx-target="#cameras-section" hx-swap="outerHTML"
+            <span class="text-gray-500 text-sm">{% translate "Page" %} {{ contacts.number }} {% translate "of" %} {{ contacts.paginator.num_pages }}</span>
+            {% if contacts.has_next %}
+                <button hx-get="?page={{ contacts.next_page_number }}" hx-target="#contact-section" hx-swap="outerHTML"
                         hx-push-url="true"
                         class="flex items-center justify-center px-3 h-8 ms-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                     {% translate "Next" %}

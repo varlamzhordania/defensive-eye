@@ -207,8 +207,20 @@
         @apply flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700;
     }
 
+    .sidebar-link.active {
+        @apply bg-gray-100;
+    }
+
+    .sidebar-link.active .sidebar-icon {
+        @apply text-gray-900;
+    }
+
     .sidebar-icon {
-        @apply text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white;
+        @apply text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white text-xl;
+    }
+
+    .table-container {
+        @apply relative overflow-x-auto;
     }
 
     .table {

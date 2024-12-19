@@ -14,5 +14,6 @@ urlpatterns = [
     path('cart/update/', views.update_cart_item_view, name='update_cart'),
     path('checkout/', views.checkout_view, name='checkout'),
     path('stripe/create-session/<int:order_id>/', views.create_stripe_session_view, name='stripe_create_session'),
+    path('stripe/create-session/subscribtion/<int:plan_id>/', views.create_subscription_session_view, name='stripe_create_subscription_session'),
     path('stripe/webhook/', views.stripe_webhook_view, name='stripe_webhook'),
 ]

@@ -12,7 +12,7 @@
             </a>
             <div class="flex items-center lg:order-2">
                 {% if request.user.is_authenticated %}
-                    {% include 'web/components/navbar_user_avatar.html' %}
+                    {% include 'web/components/navbar_user_avatar.html' with show_info=True %}
                 {% else %}
                     <a href="{% url 'accounts:login' %}"
                        class="btn btn-gradient-secondary btn-pill">{% translate 'Log in' %}</a>

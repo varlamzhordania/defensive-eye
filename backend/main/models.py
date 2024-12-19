@@ -1,11 +1,16 @@
+import stripe
+
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from autoslug import AutoSlugField
 from django.core.validators import MinValueValidator
 from django.urls import reverse
+from django.conf import settings
+from autoslug import AutoSlugField
 
 from core.models import BaseModel, UploadPath
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 class Plans(BaseModel):
@@ -40,6 +45,8 @@ class Plans(BaseModel):
         blank=True,
         related_name="plans"
     )
+    stripe_product_id = models.CharField(verbose_name=_("Stripe Product ID"), max_length=255, blank=True, null=True)
+    stripe_price_id = models.CharField(verbose_name=_("Stripe Product ID"), max_length=255, blank=True, null=True)
 
     class Meta:
         verbose_name = _('Plan')
@@ -48,6 +55,26 @@ class Plans(BaseModel):
 
     def __str__(self):
         return self.name
+
+    def _create_stripe(self):
+        if self.stripe_product_id and self.stripe_price_id:
+            print("Stripe product and price already exist.")
+            return
+
+        product = stripe.Product.create(name=self.name, description=self.description)
+
+        price = stripe.Price.create(
+            unit_amount=int(self.price * 100),  # Stripe uses cents
+            currency='usd',
+            recurring={'interval': 'month'},  # Monthly billing
+            product=product['id'],
+        )
+        self.stripe_product_id = product['id']
+        self.stripe_price_id = price['id']
+        self.save(update_fields=['stripe_product_id', 'stripe_price_id'])
+
+    def get_items(self):
+        return self.items.filter(is_active=True)
 
 
 class PlansItem(BaseModel):

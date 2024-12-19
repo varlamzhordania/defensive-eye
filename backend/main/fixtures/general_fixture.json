@@ -24,15 +24,155 @@
     }
   },
   {
+    "model": "main.plansitem",
+    "pk": 4,
+    "fields": {
+      "name": "Night Vision",
+      "description": "Infrared night vision for enhanced security in low light."
+    }
+  },
+  {
+    "model": "main.plansitem",
+    "pk": 5,
+    "fields": {
+      "name": "Motion Detection",
+      "description": "Advanced motion detection to trigger alerts and recordings."
+    }
+  },
+  {
+    "model": "main.plansitem",
+    "pk": 6,
+    "fields": {
+      "name": "Cloud Storage",
+      "description": "Store recordings securely in the cloud for easy access."
+    }
+  },
+  {
+    "model": "main.plansitem",
+    "pk": 7,
+    "fields": {
+      "name": "Mobile App Access",
+      "description": "Control and view your cameras via a dedicated mobile app."
+    }
+  },
+  {
+    "model": "main.plansitem",
+    "pk": 8,
+    "fields": {
+      "name": "Real-Time Alerts",
+      "description": "Receive instant notifications for motion or sound detection."
+    }
+  },
+  {
+    "model": "main.plansitem",
+    "pk": 9,
+    "fields": {
+      "name": "Two-Way Audio",
+      "description": "Communicate through cameras with built-in microphones and speakers."
+    }
+  },
+  {
+    "model": "main.plansitem",
+    "pk": 10,
+    "fields": {
+      "name": "Facial Recognition",
+      "description": "Advanced facial recognition technology for better identification."
+    }
+  },
+  {
+    "model": "main.plansitem",
+    "pk": 11,
+    "fields": {
+      "name": "Activity Zones",
+      "description": "Set specific areas to monitor for motion detection."
+    }
+  },
+  {
+    "model": "main.plansitem",
+    "pk": 12,
+    "fields": {
+      "name": "Multiple Users",
+      "description": "Allow multiple users to access and manage the cameras."
+    }
+  },
+  {
+    "model": "main.plansitem",
+    "pk": 13,
+    "fields": {
+      "name": "Extended Storage",
+      "description": "Increase the number of days recordings are stored."
+    }
+  },
+  {
+    "model": "main.plansitem",
+    "pk": 14,
+    "fields": {
+      "name": "4K Streaming",
+      "description": "Ultra high-definition streaming for crystal clear visuals."
+    }
+  },
+  {
+    "model": "main.plansitem",
+    "pk": 15,
+    "fields": {
+      "name": "Customizable Notifications",
+      "description": "Set up custom alerts based on activity types."
+    }
+  },
+  {
+    "model": "main.plansitem",
+    "pk": 16,
+    "fields": {
+      "name": "Remote Lock Integration",
+      "description": "Integrate cameras with smart locks for enhanced security."
+    }
+  },
+  {
+    "model": "main.plansitem",
+    "pk": 17,
+    "fields": {
+      "name": "Thermal Imaging",
+      "description": "Thermal imaging support for detecting heat signatures."
+    }
+  },
+  {
+    "model": "main.plansitem",
+    "pk": 18,
+    "fields": {
+      "name": "AI-Powered Insights",
+      "description": "Leverage AI to analyze camera footage and identify patterns."
+    }
+  },
+  {
+    "model": "main.plansitem",
+    "pk": 19,
+    "fields": {
+      "name": "Emergency Call Button",
+      "description": "A dedicated button to trigger emergency alerts and calls."
+    }
+  },
+  {
+    "model": "main.plansitem",
+    "pk": 20,
+    "fields": {
+      "name": "Custom Branding",
+      "description": "Add your company’s logo and style to the camera interface."
+    }
+  },
+  {
     "model": "main.plans",
     "pk": 1,
     "fields": {
       "name": "Personal Plan",
       "slug": "personal-plan",
-      "description": "Perfect for personal use with limited streaming.",
+      "description": "Perfect for personal use with essential features.",
       "price": "10.00",
       "items": [
-        1
+        1,
+        4,
+        7,
+        8,
+        6
       ]
     }
   },
@@ -42,11 +182,17 @@
     "fields": {
       "name": "Home Plan",
       "slug": "home-plan",
-      "description": "For home users with HD streaming and up to 3 cameras.",
+      "description": "Designed for home users with advanced streaming options.",
       "price": "20.00",
       "items": [
         2,
-        3
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        13
       ]
     }
   },
@@ -56,10 +202,60 @@
     "fields": {
       "name": "Company Plan",
       "slug": "company-plan",
-      "description": "For companies with multiple cameras and unlimited streaming.",
+      "description": "Comprehensive solution for businesses with premium features.",
       "price": "50.00",
       "items": [
-        3
+        3,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18
+      ]
+    }
+  },
+  {
+    "model": "main.plans",
+    "pk": 4,
+    "fields": {
+      "name": "Professional Plan",
+      "slug": "professional-plan",
+      "description": "For professionals requiring extensive features and storage.",
+      "price": "75.00",
+      "items": [
+        3,
+        5,
+        7,
+        10,
+        12,
+        13,
+        14,
+        17
+      ]
+    }
+  },
+  {
+    "model": "main.plans",
+    "pk": 5,
+    "fields": {
+      "name": "Enterprise Plan",
+      "slug": "enterprise-plan",
+      "description": "A scalable plan for large companies with AI insights.",
+      "price": "100.00",
+      "items": [
+        3,
+        9,
+        10,
+        11,
+        13,
+        14,
+        16,
+        17,
+        18,
+        19,
+        20
       ]
     }
   },

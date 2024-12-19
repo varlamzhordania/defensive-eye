@@ -1,15 +1,34 @@
-from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest, HttpResponse
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 
-from .forms import RegistrationForm, LoginForm
+from .forms import RegistrationForm, LoginForm, ContactForm, CustomUserChangeForm
 from .decorators import unauthenticated_user
+from .models import Contacts
 
+from main.models import Plans
 from core.utils import fancy_message
 
 
-# Create your views here.
+def user_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
+    form = CustomUserChangeForm(instance=request.user)
+
+    if request.method == "POST":
+        form = CustomUserChangeForm(data=request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            fancy_message(request, "You have successfully changed your account.", "success")
+            return redirect(".")
+
+    context = {
+        "active_tab": "account",
+        "title": "Account | Eye Security",
+        "form": form,
+    }
+    return render(request, 'accounts/account.html', context)
+
 
 @unauthenticated_user
 def login_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
@@ -58,3 +77,84 @@ def logout_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
     fancy_message(request, "You have been logged out successfully.", "success")
 
     return redirect("main:home")
+
+
+@login_required
+def contact_list_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
+    contacts = Contacts.objects.filter(user=request.user, is_active=True)
+
+    paginator = Paginator(contacts, 10)
+    page = request.GET.get('page', 1)
+
+    paged_contacts = paginator.get_page(page)
+
+    context = {
+        "active_tab": "contacts",
+        "title": "Contact list",
+        "contacts": paged_contacts,
+    }
+
+    if request.htmx:
+        return render(request, "accounts/components/contact_list_result.html", context)
+
+    return render(request, "accounts/contact_list.html", context)
+
+
+@login_required
+def contact_create_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
+    form = ContactForm()
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            contact = form.save(commit=False)
+            contact.user = request.user
+            contact.save()
+            fancy_message(request, "New contact added successfully.", "success")
+            return redirect("accounts:contact_list")
+        else:
+            fancy_message(request, "Resolve the errors and try again.", "error")
+    context = {
+        "active_tab": "contacts",
+        "title": "Contact list",
+        "form": form,
+    }
+    return render(request, "accounts/contact_create.html", context)
+
+
+@login_required
+def contact_delete_view(request: HttpRequest, contact_id, *args, **kwargs) -> HttpResponse:
+    contact = get_object_or_404(Contacts, id=contact_id, user=request.user)
+    contact.delete()
+    fancy_message(request, "Contact deleted successfully.", "success")
+    return redirect("accounts:contact_list")
+
+
+@login_required
+def subscription_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
+    plans = Plans.objects.filter(is_active=True).order_by("created_at")
+
+    context = {
+        "active_tab": "subscriptions",
+        "title": "Subscription plans",
+        "plans": plans,
+    }
+
+    return render(request, 'accounts/subscription_list.html', context)
+
+
+@login_required
+def cancel_subscription_view(request):
+    user = request.user
+
+    if not hasattr(user, 'subscription'):
+        fancy_message(request, "You have no subscription yet.", "error")
+        return redirect("accounts:subscription_list")
+
+    try:
+        user.subscription.cancel()
+        fancy_message(request, "Subscription canceled successfully.", "success")
+        return redirect("accounts:subscription_list")
+    except ValueError as e:
+        fancy_message(request, "Something went wrong.please try later.", "error")
+        print("cancel subscription error: {}".format(e))
+        return redirect("accounts:subscription_list")

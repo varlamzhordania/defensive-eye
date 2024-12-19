@@ -1,4 +1,8 @@
+from accounts.models import Subscription
+from main.models import Plans
 from shop.models import Order, Transaction
+
+from django.contrib.auth import get_user_model
 
 
 def handle_checkout_session_completed(data):
@@ -64,3 +68,55 @@ def handle_payment_intent_canceled(data):
 
     # Update the order status
     order.update_status(Order.StatusChoices.CANCELED)
+
+
+def handle_subscription_created(data):
+    """
+    Handle 'customer.subscription.created' event.
+    """
+    stripe_subscription_id = data.get('id')
+    stripe_customer_id = data.get('customer')
+    status = data.get('status')
+    plan_id = data.get('items', {}).get('data', [{}])[0].get('price', {}).get('id')
+
+    # Find user and plan
+    user = get_user_model().objects.filter(stripe_customer_id=stripe_customer_id).first()
+    plan = Plans.objects.filter(stripe_price_id=plan_id).first()
+
+    if user and plan:
+        subscription, created = Subscription.objects.update_or_create(
+            user=user,
+            defaults={
+                'stripe_subscription_id': stripe_subscription_id,
+                'plan': plan,
+                'status': status,
+                'is_active': True,  # Ensure the subscription is marked as active
+            },
+        )
+
+
+def handle_subscription_updated(data):
+    """
+    Handle 'customer.subscription.updated' event.
+    """
+    stripe_subscription_id = data.get('id')
+    status = data.get('status')
+
+    print(data)
+
+    subscription = Subscription.objects.filter(stripe_subscription_id=stripe_subscription_id).first()
+    if subscription:
+        subscription.status = status
+        subscription.save(update_fields=['status'])
+
+
+def handle_subscription_deleted(data):
+    """
+    Handle 'customer.subscription.deleted' event.
+    """
+    stripe_subscription_id = data.get('id')
+
+    subscription = Subscription.objects.filter(stripe_subscription_id=stripe_subscription_id).first()
+    if subscription:
+        subscription.status = 'canceled'
+        subscription.save(update_fields=['status'])
