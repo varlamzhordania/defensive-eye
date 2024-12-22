@@ -84,9 +84,9 @@ def add_to_cart_view(request: HttpRequest, product_id: int, *args, **kwargs) -> 
 
 @login_required
 def cart_detail_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
-    cart = Cart.objects.get(user=request.user)
-    items = cart.items.filter(is_active=True)
-    cart_items_count = items.count()
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    items = cart.get_items()
+    cart_items_count = items.count() if items else 0
     context = {
         "title": "Shopping Cart",
         "cart": cart,
@@ -228,7 +228,6 @@ def create_subscription_session_view(request: HttpRequest, plan_id: int, *args, 
         request.user.stripe_customer_id = customer_id
         request.user.save(update_fields=['stripe_customer_id'])
 
-
     session = stripe.checkout.Session.create(
         payment_method_types=['card'],
         line_items=[{
@@ -247,7 +246,6 @@ def create_subscription_session_view(request: HttpRequest, plan_id: int, *args, 
 @csrf_exempt
 @require_POST
 def stripe_webhook_view(request: HttpRequest) -> JsonResponse:
-
     payload = request.body
     sig_header = request.META.get('HTTP_STRIPE_SIGNATURE', '')
     endpoint_secret = settings.STRIPE_WEBHOOK_KEY

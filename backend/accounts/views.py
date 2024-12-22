@@ -3,8 +3,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest, HttpResponse
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
-from .forms import RegistrationForm, LoginForm, ContactForm, CustomUserChangeForm
+from .forms import RegistrationForm, LoginForm, ContactForm, CustomUserChangeForm,CustomChangePasswordForm
 from .decorators import unauthenticated_user
 from .models import Contacts
 
@@ -14,6 +15,7 @@ from core.utils import fancy_message
 
 def user_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
     form = CustomUserChangeForm(instance=request.user)
+    password_form = CustomChangePasswordForm(user=request.user)
 
     if request.method == "POST":
         form = CustomUserChangeForm(data=request.POST, instance=request.user)
@@ -21,14 +23,28 @@ def user_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
             form.save()
             fancy_message(request, "You have successfully changed your account.", "success")
             return redirect(".")
-
+        else:
+            fancy_message(request,"Please make sure to fill fields correctly.", "error")
+            print(form.errors)
     context = {
         "active_tab": "account",
         "title": "Account | Eye Security",
         "form": form,
+        "password_form": password_form,
     }
     return render(request, 'accounts/account.html', context)
 
+@login_required
+@require_POST
+def password_change_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
+    form = CustomChangePasswordForm(user=request.user, data=request.POST)
+    if form.is_valid():
+        form.save()
+        fancy_message(request, "You have successfully changed your password.", "success")
+        return redirect("accounts:user_edit")
+    else:
+        fancy_message(request,form.errors, "error")
+        return redirect("accounts:user_edit")
 
 @unauthenticated_user
 def login_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:

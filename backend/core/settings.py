@@ -15,6 +15,7 @@ ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=["*"])
 
 # Application definition
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

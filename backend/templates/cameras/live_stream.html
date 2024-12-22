@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Stream - {{ product.product.name }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <header class="bg-blue-600 text-white p-4 shadow-md">
+        <div class="container mx-auto">
+            <h1 class="text-2xl font-bold">Live Stream - {{ product.product.name }}</h1>
+            <p class="text-sm">Streaming Code: {{ product.code }}</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="">
+            <!-- Image element for displaying JPEG frames -->
+            <div class="relative bg-gray-200 overflow-hidden">
+                <img id="live-stream" alt="Live Stream"
+                    class="w-full max-w-full h-screen object-cover border-2 border-gray-300 rounded-lg">
+            </div>
+        </div>
+    </main>
+    <script>
+        const imgElement = document.getElementById('live-stream');
+        const statusElement = document.getElementById('status');
+
+        // WebSocket connection
+        const socket = new WebSocket(`ws://localhost:8001{{ stream_url }}`);
+        socket.binaryType = 'arraybuffer';
+
+        // Handle WebSocket events
+        socket.onopen = () => {
+            statusElement.textContent = "Connected to the stream!";
+        };
+
+        socket.onmessage = (event) => {
+            // Convert received binary data to a Blob and update the <img> src
+            const blob = new Blob([event.data], { type: 'image/jpeg' });
+            const url = URL.createObjectURL(blob);
+            imgElement.src = url; // Update image source dynamically
+        };
+
+        socket.onclose = () => {
+            statusElement.textContent = "Stream disconnected.";
+        };
+
+        socket.onerror = (error) => {
+            console.error('WebSocket error:', error);
+            statusElement.textContent = "An error occurred. Please try again.";
+        };
+    </script>
+</body>
+</html>

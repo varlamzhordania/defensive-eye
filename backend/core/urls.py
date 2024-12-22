@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('main.urls', namespace='main')),
     path('', include('accounts.urls', namespace='accounts')),
     path('', include('shop.urls', namespace='shop')),
+    path('', include('websocket.urls', namespace='websocket')),
     path('api/', include('api.urls', namespace='api')),
     path('api-auth/', include('rest_framework.urls'))
 ]

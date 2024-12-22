@@ -37,7 +37,7 @@
                     </td>
                     <td class="table-cell">
                         <div class="flex flex-row justify-start items-center">
-                            <a class="btn btn-secondary btn-xs hover:underline">Watch live</a>
+                            <a href="{% url 'websocket:live_stream' item.code %}" class="btn btn-secondary btn-xs hover:underline">Watch live</a>
                             <a class="btn btn-secondary btn-xs hover:underline">Send SMS</a>
                         </div>
                     </td>

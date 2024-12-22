@@ -32,6 +32,10 @@ class Cart(BaseModel):
     def clear_cart(self):
         self.items.all().delete()
 
+    def get_items(self):
+        if hasattr(self, "items"):
+            return self.items.filter(is_active=True)
+        return []
 
 class CartItem(BaseModel):
     cart = models.ForeignKey(

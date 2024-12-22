@@ -1,15 +1,19 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
 
 from .models import User, Contacts
 
 
+class CustomChangePasswordForm(PasswordChangeForm):
+    pass
+
+
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = User
-        fields = "__all__"
+        exclude = ("username", "email", "is_staff", "is_active", "is_superuser", "groups", "user_permissions","date_joined","wallet")
 
 
 class ContactForm(forms.ModelForm):
