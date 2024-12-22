@@ -217,49 +217,6 @@
     }
   },
   {
-    "model": "main.plans",
-    "pk": 4,
-    "fields": {
-      "name": "Professional Plan",
-      "slug": "professional-plan",
-      "description": "For professionals requiring extensive features and storage.",
-      "price": "75.00",
-      "items": [
-        3,
-        5,
-        7,
-        10,
-        12,
-        13,
-        14,
-        17
-      ]
-    }
-  },
-  {
-    "model": "main.plans",
-    "pk": 5,
-    "fields": {
-      "name": "Enterprise Plan",
-      "slug": "enterprise-plan",
-      "description": "A scalable plan for large companies with AI insights.",
-      "price": "100.00",
-      "items": [
-        3,
-        9,
-        10,
-        11,
-        13,
-        14,
-        16,
-        17,
-        18,
-        19,
-        20
-      ]
-    }
-  },
-  {
     "model": "main.products",
     "pk": 1,
     "fields": {
