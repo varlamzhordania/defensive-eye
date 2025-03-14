@@ -27,8 +27,10 @@
         const imgElement = document.getElementById('live-stream');
         const statusElement = document.getElementById('status');
 
+        const protocol = window.location.protocol === "http:" ? "ws" : "wss"
+        
         // WebSocket connection
-        const socket = new WebSocket(`ws://localhost:8001{{ stream_url }}`);
+        const socket = new WebSocket(`${protocol}://{{ location }}{{ stream_url }}`);
         socket.binaryType = 'arraybuffer';
 
         // Handle WebSocket events

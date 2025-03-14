@@ -155,6 +155,10 @@ STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")
 STRIPE_PUBLISHABLE_KEY = env("STRIPE_PUBLISHABLE_KEY")
 STRIPE_WEBHOOK_KEY = env("STRIPE_WEBHOOK_KEY")
 
+BASE_DOMAIN=env("BASE_DOMAIN",default="localhost:8000")
+STREAM_DOMAIN=env("STREAM_DOMAIN",default="localhost:8001")
+API_DOMAIN=env("API_DOMAIN",default="localhost:8000")
+
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',

@@ -1,4 +1,5 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
 from django.utils.timezone import now
@@ -78,5 +79,6 @@ def live_stream_view(request, code):
 
     return render(request, 'cameras/live_stream.html', {
         'product': product,
-        'stream_url': f"/ws/view_stream/?code={code}"
+        'stream_url': f"/ws/view_stream/?code={code}",
+        'location':settings.STREAM_DOMAIN,
     })
