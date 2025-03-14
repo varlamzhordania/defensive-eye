@@ -15,7 +15,8 @@ if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=["*"])
+# ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=["*"])
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 INSTALLED_APPS = [
