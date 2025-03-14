@@ -3,13 +3,35 @@ DOCKER_COMPOSE=docker-compose
 PROJECT_NAME=core
 STRIPE_WEBHOOK_URL=http://localhost:8000/stripe/webhook/
 
-# Default target: run initial setup
-initial: copy-env build migrations migrate up
+# Default target based on OS detection
+initial: detect-os
 
-# Copy .env.example to docker.env (Windows-friendly with PowerShell)
-copy-env:
+# Windows initial setup
+initial-windows: copy-env-windows build migrations migrate up
+
+# Ubuntu/Linux initial setup
+initial-linux: copy-env-linux build migrations migrate up
+
+# OS detection to run the right target
+detect-os:
+	@echo "Detecting OS..."
+	@if [ "$(OS)" = "Windows_NT" ]; then \
+		$(MAKE) initial-windows; \
+	else \
+		$(MAKE) initial-linux; \
+	fi
+
+# Copy .env for Windows (PowerShell)
+copy-env-windows:
 	@powershell -Command "if (-Not (Test-Path 'docker.env')) {Copy-Item '.env.example' 'docker.env'; Write-Host 'Copied .env.example to docker.env.'} else {Write-Host 'docker.env already exists.'}"
 
+# Copy .env for Linux/Ubuntu (bash)
+copy-env-linux:
+	@if [ ! -f docker.env ]; then \
+		cp .env.example docker.env && echo "Copied .env.example to docker.env."; \
+	else \
+		echo "docker.env already exists."; \
+	fi
 # Build the web, daphne, and nginx containers
 build:
 	$(DOCKER_COMPOSE) build
