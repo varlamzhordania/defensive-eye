@@ -23,12 +23,12 @@ detect-os:
 
 # Copy .env for Windows (PowerShell)
 copy-env-windows:
-	@powershell -Command "if (-Not (Test-Path 'docker.env')) {Copy-Item '.env.example' 'docker.env'; Write-Host 'Copied .env.example to docker.env.'} else {Write-Host 'docker.env already exists.'}"
+	@powershell -Command "if (-Not (Test-Path 'docker.env')) {Copy-Item 'example.env' 'docker.env'; Write-Host 'Copied example.env to docker.env.'} else {Write-Host 'docker.env already exists.'}"
 
 # Copy .env for Linux/Ubuntu (bash)
 copy-env-linux:
 	@if [ ! -f docker.env ]; then \
-		cp .env.example docker.env && echo "Copied .env.example to docker.env."; \
+		cp example.env docker.env && echo "Copied example.env to docker.env."; \
 	else \
 		echo "docker.env already exists."; \
 	fi
