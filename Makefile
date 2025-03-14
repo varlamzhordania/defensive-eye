@@ -1,5 +1,5 @@
 # Variables
-DOCKER_COMPOSE=docker-compose
+DOCKER_COMPOSE=docker compose
 PROJECT_NAME=core
 STRIPE_WEBHOOK_URL=http://localhost:8000/stripe/webhook/
 
