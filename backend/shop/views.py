@@ -31,6 +31,7 @@ def order_history_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
     paged_orders = paginator.get_page(page)
 
     context = {
+        "active_tab":"orders",
         "title": "Order history",
         "orders": paged_orders,
     }

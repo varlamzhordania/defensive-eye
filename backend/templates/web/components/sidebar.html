@@ -1,5 +1,6 @@
 {% load i18n %}
 {% url 'main:dashboard' as dashboard %}
+{% url 'main:home' as home %}
 {% url 'shop:order_history' as orders %}
 {% url 'main:cameras_list' as cameras %}
 {% url 'accounts:contact_list' as contacts %}
@@ -66,9 +67,17 @@
                 </a>
             </li>
             <li>
-                <a href="{{ subscribes }}" class="sidebar-link group {% if active_tab == 'subscriptions' %}active{% endif %}">
+                <a href="{{ subscribes }}"
+                   class="sidebar-link group {% if active_tab == 'subscriptions' %}active{% endif %}">
                     <span class="fa-light fa-sparkles sidebar-icon"></span>
                     <span class="ml-3">{% translate 'Subscription' %}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ home }}"
+                   class="sidebar-link group">
+                    <span class="fa-light fa-door-open sidebar-icon"></span>
+                    <span class="ml-3">{% translate 'Exit' %}</span>
                 </a>
             </li>
         </ul>

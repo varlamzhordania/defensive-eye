@@ -81,5 +81,5 @@ class ProductMediaAdmin(admin.ModelAdmin):
 class ProductRegisteredAdmin(admin.ModelAdmin):
     list_display = ('product', 'code', 'is_claimed', 'claimed_user', 'created_at', 'updated_at')
     search_fields = ('product__name', 'code', 'claimed_user__username')
-    list_filter = ('is_claimed',)
-    readonly_fields = ('is_claimed', 'claimed_user')
+    list_filter = ('is_claimed','product',)
+    # readonly_fields = ('is_claimed', 'claimed_user')
