@@ -10,7 +10,7 @@ initial: detect-os
 initial-windows: copy-env-windows build migrations migrate up
 
 # Ubuntu/Linux initial setup
-initial-linux: copy-env-linux build migrations migrate up
+initial-linux: copy-env-linux build migrations migrate static up
 
 # OS detection to run the right target
 detect-os:
@@ -43,6 +43,10 @@ migrations:
 # Apply migrations
 migrate:
 	$(DOCKER_COMPOSE) run --rm web python manage.py migrate
+
+# Run collect static
+static:
+	$(DOCKER_COMPOSE) run --rm web python manage.py collectstatic
 
 # Start the development server (use docker-compose.yml)
 up:
