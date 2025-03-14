@@ -21,7 +21,8 @@ services:
       bash -c "python manage.py runserver 0.0.0.0:8000"
     #      bash -c "gunicorn --bind 0.0.0.0:8000 core.wsgi:application"
     volumes:
-      - ./backend:/app
+      - ./backend/:/home/defensive-eye
+      - ./cert/:/home/defensive-eye/cert
     depends_on:
       - db
       - redis
@@ -42,7 +43,8 @@ services:
       bash -c "daphne -b 0.0.0.0 -p 8001 core.asgi:application"
 #      bash -c "daphne -u /app/daphne.sock core.asgi:application"
     volumes:
-      - ./backend:/app
+      - ./backend/:/home/defensive-eye
+      - ./cert/:/home/defensive-eye/cert
     depends_on:
       - db
       - redis
@@ -59,8 +61,9 @@ services:
 #    image: nginx:alpine
 #    volumes:
 #      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-#      - ./backend/static:/app/static
-#      - ./backend/media:/app/media
+#      - ./backend/static:/home/defensive-eye/static
+#      - ./backend/media:/home/defensive-eye/media
+#      - ./cert/:/home/defensive-eye/cert
 #    ports:
 #      - "80:80"
 #    depends_on:
