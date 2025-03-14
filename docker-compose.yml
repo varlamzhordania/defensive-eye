@@ -19,7 +19,7 @@ services:
       dockerfile: Dockerfile
     command: >
       bash -c "python manage.py runserver 0.0.0.0:8000"
-    #      bash -c "gunicorn --bind 0.0.0.0:8000 core.wsgi:application"
+    #      bash -c "gunicorn -c conf/gunicorn_conf.py core.wsgi:application"
     volumes:
       - ./backend/:/home/defensive-eye
       - ./cert/:/home/defensive-eye/cert
