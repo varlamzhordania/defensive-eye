@@ -6,7 +6,7 @@ ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
 # Set working directory
-WORKDIR /app
+WORKDIR /home/defensive-eye
 
 # Install system dependencies
 RUN apt-get update \
@@ -16,9 +16,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install pip dependencies
-COPY requirements.txt /app/
+COPY requirements.txt /home/defensive-eye/
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
 # Copy the rest of the application code into the container
-COPY . /app/
-
+COPY . /home/defensive-eye/

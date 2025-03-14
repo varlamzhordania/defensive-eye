@@ -61,7 +61,7 @@ services:
 #    image: nginx:alpine
 #    volumes:
 #      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-#      - ./backend/static:/home/defensive-eye/static
+#      - ./backend/staticfiles:/home/defensive-eye/staticfiles
 #      - ./backend/media:/home/defensive-eye/media
 #      - ./cert/:/home/defensive-eye/cert
 #    ports:
