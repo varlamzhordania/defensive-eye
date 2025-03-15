@@ -3,8 +3,8 @@ import asyncio
 import websockets
 
 # WebSocket URL
-CODE = "DFSSFSFFD"
-WEBSOCKET_URL = f"ws://localhost:8001/ws/camera_stream/?code={CODE}"
+CODE = "DEF456UVW"
+WEBSOCKET_URL = f"wss://stream.defensiveeyes.com/ws/camera_stream/?code={CODE}"
 
 async def stream_camera():
     async with websockets.connect(WEBSOCKET_URL) as websocket:

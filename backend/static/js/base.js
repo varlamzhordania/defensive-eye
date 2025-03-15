@@ -18,7 +18,13 @@ import '@splidejs/splide/css';
 
 document.addEventListener("DOMContentLoaded", function () {
     const csrftoken = Cookies.get("csrftoken")
+    const footerCopyLaw = document.getElementById("footer-copy-law")
 
+    if (footerCopyLaw) {
+        const startYear = "2024"
+        const currentYear = new Date().getFullYear()
+        footerCopyLaw.innerText= `${startYear} - ${currentYear}`
+    }
 
     const megaMenuTrigger = document.getElementById("mega-menu-trigger");
     const megaMenu = document.getElementById("mega-menu");

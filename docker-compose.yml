@@ -41,7 +41,6 @@ services:
       dockerfile: Dockerfile
     command: >
       bash -c "daphne -b 0.0.0.0 -p 8001 core.asgi:application"
-#      bash -c "daphne -u /app/daphne.sock core.asgi:application"
     volumes:
       - ./backend/:/home/defensive-eye
       - ./cert/:/home/defensive-eye/cert
