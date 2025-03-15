@@ -2,75 +2,73 @@
 {% load static %}
 {% block content %}
     <!-- Hero Section -->
-    <section class="relative  flex justify-center items-start py-12">
-        <div class="container grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-12 h-full overflow-x-clip ">
-            <!-- Left Side with Text Content -->
-            <div class="col-span-1 md:col-span-2 lg:col-span-2 h-full flex flex-col justify-center order-2 md:order-1">
-                <h1 class="text-4xl font-bold mb-4">
-                    Protect What
-                    <span class="underline decoration-primary-600 decoration-8">Matters</span>
-                    with <br/>Defensive Eye
-                </h1>
-                <p class="text-lg mb-6">
-                    Keep your personal space, home, and business safe with affordable, high-quality security cameras.
-                    Our easy-to-use cameras stream live to our secure servers, and you can manage them from your mobile
-                    or web app—anytime, anywhere.
-                </p>
-                <div class="space-x-4 flex justify-start">
-                    <a href="#cta" class="btn btn-gradient-primary ">Buy Defensive Eye</a>
-                    <a href="#features" class="btn btn-gradient-secondary">Learn More</a>
-                </div>
-            </div>
+    <div class="relative">
+        <section class="relative flex flex-col pb-16 lg:!bg-fixed !bg-cover !bg-right"
+                 style="background: url('{% static 'img/hero-background.jpg' %}');">
 
-            <!-- Right Side with Image -->
-            <div class="relative col-span-1 lg:col-span-2 h-full flex justify-center items-center order-1 md:order-2">
-                <img src="{% static 'img/camera-1.png' %}"
-                     class="size-1/2 md:size-full lg:max-w-md h-auto object-cover rounded-lg z-10"
-                     alt="Description of the image">
-                <div class="absolute flex justify-center items-center">
-                    <span class="absolute rounded-full size-[180px] md:scale-150 lg:scale-150 bg-primary-500/15"></span>
-                    <span class="absolute rounded-full size-[210px] md:scale-150 lg:scale-150 bg-primary-500/15"></span>
-                    <span class="absolute rounded-full size-[240px] md:scale-150 lg:scale-150 bg-primary-500/15"></span>
+            <div class="absolute h-full w-full bg-black/80 lg:bg-black/50 "></div>
+            <div class="container grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-12 h-full py-16 lg:py-32">
+                <!-- Left Side with Text Content -->
+                <div class="col-span-1 text-white md:col-span-2 lg:col-span-2 h-full flex flex-col justify-center z-20">
+                    <h1 class="text-4xl font-bold mb-4">
+                        Protect What
+                        <span class="underline decoration-primary-600 decoration-8">Matters</span>
+                        with <br/>Defensive Eye
+                    </h1>
+                    <p class="text-lg mb-6">
+                        Keep your personal space, home, and business safe with affordable, high-quality security
+                        cameras.
+                        Our easy-to-use cameras stream live to our secure servers, and you can manage them from your
+                        mobile
+                        or web app—anytime, anywhere.
+                    </p>
+                    <div class="space-x-4 flex justify-start">
+                        <a href="#cta" class="btn btn-gradient-primary ">Buy Defensive Eye</a>
+                        <a href="#features" class="btn btn-gradient-secondary">Learn More</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <div class="relative -mt-32 mx-auto flex justify-center items-start py-6 -40">
+            <div class="h-full max-w-7xl bg-white shadow-lg md:rounded-3xl grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 place-content-center p-8">
+                <div class="col-span-1 h-full px-4 text-center">
+                    <div class="text-3xl text-primary-500 mb-4">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Easy Setup</h3>
+                    <p class="text-gray-700 text-sm">
+                        Simply plug in your camera, connect it to your Wi-Fi, and you're ready to go. No complicated
+                        installation required.
+                    </p>
+                </div>
+                <div class="col-span-1 h-full md:border-l px-4 text-center">
+                    <div class="text-3xl text-primary-500 mb-4">
+                        <i class="fa-solid fa-lock-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Manage on the Go</h3>
+                    <p class="text-gray-700 text-sm">
+                        Use our mobile app to control and monitor your cameras in real-time, whether you're at home
+                        or
+                        on
+                        the move.
+                    </p>
+                </div>
+                <div class="col-span-1 h-full md:border-l px-4 text-center">
+                    <div class="text-3xl text-primary-500 mb-4">
+                        <i class="fa-solid fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Secure Your Space</h3>
+                    <p class="text-gray-700 text-sm">
+                        Our cameras provide 24/7 surveillance with live streaming, automatic alerts, and motion
+                        detection
+                        to ensure your property is always protected.
+                    </p>
                 </div>
             </div>
         </div>
-        <span class="hidden md:block absolute top-1/2 left-5 rounded-full w-[250px] h-[250px] bg-secondary-500/15 -z-10"></span>
-    </section>
-    <section class="flex justify-center items-start py-6 my-12 md:my-20 lg:my-20 ">
-        <div class="h-full max-w-7xl bg-white shadow-lg md:rounded-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 place-content-center p-8">
-            <div class="col-span-1 h-full px-4 text-center">
-                <div class="text-3xl text-primary-500 mb-4">
-                    <i class="fas fa-cogs"></i>
-                </div>
-                <h3 class="text-xl font-semibold mb-2">Easy Setup</h3>
-                <p class="text-gray-700 text-sm">
-                    Simply plug in your camera, connect it to your Wi-Fi, and you're ready to go. No complicated
-                    installation required.
-                </p>
-            </div>
-            <div class="col-span-1 h-full md:border-l px-4 text-center">
-                <div class="text-3xl text-primary-500 mb-4">
-                    <i class="fa-solid fa-lock-alt"></i>
-                </div>
-                <h3 class="text-xl font-semibold mb-2">Manage on the Go</h3>
-                <p class="text-gray-700 text-sm">
-                    Use our mobile app to control and monitor your cameras in real-time, whether you're at home or on
-                    the move.
-                </p>
-            </div>
-            <div class="col-span-1 h-full md:border-l px-4 text-center">
-                <div class="text-3xl text-primary-500 mb-4">
-                    <i class="fa-solid fa-mobile-alt"></i>
-                </div>
-                <h3 class="text-xl font-semibold mb-2">Secure Your Space</h3>
-                <p class="text-gray-700 text-sm">
-                    Our cameras provide 24/7 surveillance with live streaming, automatic alerts, and motion detection
-                    to ensure your property is always protected.
-                </p>
-            </div>
-        </div>
-    </section>
-    <section class="flex justify-center items-start py-12 my-12">
+    </div>
+    <section class="flex justify-center items-start py-12 my-24">
         <div class="container grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Left Section: Introduction Text -->
             <div class="col-span-1 flex flex-col justify-center text-center lg:text-left">
