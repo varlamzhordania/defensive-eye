@@ -2,10 +2,10 @@
 {% load static %}
 {% block content %}
     <!-- Hero Section -->
-    <section class="relative  flex justify-center items-start py-6">
-        <div class="container grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 h-full">
+    <section class="relative  flex justify-center items-start py-12">
+        <div class="container grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-12 h-full overflow-x-clip ">
             <!-- Left Side with Text Content -->
-            <div class="col-span-1 md:col-span-2 lg:col-span-2 h-full flex flex-col justify-center">
+            <div class="col-span-1 md:col-span-2 lg:col-span-2 h-full flex flex-col justify-center order-2 md:order-1">
                 <h1 class="text-4xl font-bold mb-4">
                     Protect What
                     <span class="underline decoration-primary-600 decoration-8">Matters</span>
@@ -23,12 +23,15 @@
             </div>
 
             <!-- Right Side with Image -->
-            <div class="relative col-span-1 lg:col-span-2 h-full flex justify-center items-center ">
-                <img src="{% static 'img/camera-1.png' %}" class="lg:max-w-md h-auto object-cover rounded-lg z-10"
+            <div class="relative col-span-1 lg:col-span-2 h-full flex justify-center items-center order-1 md:order-2">
+                <img src="{% static 'img/camera-1.png' %}"
+                     class="size-1/2 md:size-full lg:max-w-md h-auto object-cover rounded-lg z-10"
                      alt="Description of the image">
-                <span class="absolute rounded-full w-[300px] h-[300px] md:scale-50 lg:scale-110 bg-primary-500/15"></span>
-                <span class="absolute rounded-full w-[350px] h-[350px] md:scale-50 lg:scale-110 bg-primary-500/15"></span>
-                <span class="absolute rounded-full w-[400px] h-[400px] md:scale-50 lg:scale-110 bg-primary-500/15"></span>
+                <div class="absolute flex justify-center items-center">
+                    <span class="absolute rounded-full size-[180px] md:scale-150 lg:scale-150 bg-primary-500/15"></span>
+                    <span class="absolute rounded-full size-[210px] md:scale-150 lg:scale-150 bg-primary-500/15"></span>
+                    <span class="absolute rounded-full size-[240px] md:scale-150 lg:scale-150 bg-primary-500/15"></span>
+                </div>
             </div>
         </div>
         <span class="hidden md:block absolute top-1/2 left-5 rounded-full w-[250px] h-[250px] bg-secondary-500/15 -z-10"></span>
@@ -110,7 +113,8 @@
     >
         <div class="z-50 flex justify-center flex-col items-center">
             <h2 class="text-3xl font-bold mb-6">Ready to Protect What Matters?</h2>
-            <p class="text-lg mb-6 text-center">Get started with Defensive Eye today and enjoy peace of mind with the best security
+            <p class="text-lg mb-6 text-center">Get started with Defensive Eye today and enjoy peace of mind with the
+                best security
                 cameras in the market.</p>
             <a href="#buy-now" class="btn btn-gradient-primary max-w-xs btn-lg">Buy Defensive Eye Now</a>
         </div>
@@ -119,7 +123,7 @@
     <section class="flex justify-center items-start py-6 my-12">
         <div class="container max-w-screen-xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0">
             <!-- Existing Features -->
-            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full border-r border-b p-4 text-center">
+            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full lg:border-r lg:border-b p-4 text-center">
                 <div class="text-3xl text-primary-500 mb-4">
                     <i class="fas fa-dollar"></i>
                 </div>
@@ -128,7 +132,7 @@
                     Get high-quality security without breaking the bank. No hidden fees, no overpriced cameras.
                 </p>
             </div>
-            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full border-r border-b p-4 text-center">
+            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full lg:border-r lg:border-b p-4 text-center">
                 <div class="text-3xl text-primary-500 mb-4">
                     <i class="fa-solid fa-lock-alt"></i>
                 </div>
@@ -137,7 +141,7 @@
                     Our cameras are built to last, offering round-the-clock surveillance with zero downtime.
                 </p>
             </div>
-            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full border-r border-b p-4 text-center">
+            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full lg:border-r lg:border-b p-4 text-center">
                 <div class="text-3xl text-primary-500 mb-4">
                     <i class="fa-solid fa-mobile-alt"></i>
                 </div>
@@ -146,7 +150,7 @@
                     Control and manage your cameras easily through our intuitive mobile and web applications.
                 </p>
             </div>
-            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full border-b p-4 text-center">
+            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full lg:border-b p-4 text-center">
                 <div class="text-3xl text-primary-500 mb-4">
                     <i class="fa-solid fa-shield-alt"></i>
                 </div>
@@ -156,7 +160,7 @@
                 </p>
             </div>
 
-            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full border-t border-r p-4 text-center">
+            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full lg:border-t lg:border-r p-4 text-center">
                 <div class="text-3xl text-primary-500 mb-4">
                     <i class="fa-solid fa-cloud"></i>
                 </div>
@@ -166,7 +170,7 @@
                     camera is tampered with.
                 </p>
             </div>
-            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full border-t border-r p-4 text-center">
+            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full lg:border-t lg:border-r p-4 text-center">
                 <div class="text-3xl text-primary-500 mb-4">
                     <i class="fa-solid fa-bolt"></i>
                 </div>
@@ -175,7 +179,7 @@
                     Receive push notifications instantly when motion is detected, keeping you updated and in control.
                 </p>
             </div>
-            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full border-t border-r p-4 text-center">
+            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full lg:border-t lg:border-r p-4 text-center">
                 <div class="text-3xl text-primary-500 mb-4">
                     <i class="fa-solid fa-video"></i>
                 </div>
@@ -184,7 +188,7 @@
                     Enjoy crystal-clear video quality in HD resolution, making sure every detail is captured.
                 </p>
             </div>
-            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full border-t  p-4 text-center">
+            <div class="hover:bg-white hover:z-10 transition-all col-span-1 h-full lg:border-t  p-4 text-center">
                 <div class="text-3xl text-primary-500 mb-4">
                     <i class="fa-solid fa-sun"></i>
                 </div>
