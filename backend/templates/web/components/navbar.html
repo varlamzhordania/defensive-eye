@@ -15,7 +15,7 @@
                     {% include 'web/components/navbar_user_avatar.html' with show_info=True %}
                 {% else %}
                     <a href="{% url 'accounts:login' %}"
-                       class="btn btn-gradient-secondary btn-pill btn-sm md:btn-md    ">{% translate 'Log in' %}</a>
+                       class="hidden sm:inline-block btn btn-gradient-secondary btn-pill btn-sm md:btn-md    ">{% translate 'Log in' %}</a>
                     <a href="{% url 'accounts:register' %}"
                        class="btn btn-gradient-primary btn-pill btn-sm md:btn-md ">{% translate 'Get started' %}</a>
                 {% endif %}
