@@ -22,7 +22,6 @@ worker_thread.start()
 
 application = ProtocolTypeRouter(
     {
-        "http": app,
         "websocket": AuthMiddlewareStack(
             URLRouter(urlpatterns)
         ),
