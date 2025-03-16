@@ -14,7 +14,6 @@ if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-
 # ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=["*"])
 ALLOWED_HOSTS = ["*"]
 
@@ -160,15 +159,23 @@ STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")
 STRIPE_PUBLISHABLE_KEY = env("STRIPE_PUBLISHABLE_KEY")
 STRIPE_WEBHOOK_KEY = env("STRIPE_WEBHOOK_KEY")
 
-BASE_DOMAIN=env("BASE_DOMAIN",default="localhost:8000")
-STREAM_DOMAIN=env("STREAM_DOMAIN",default="localhost:8001")
-API_DOMAIN=env("API_DOMAIN",default="localhost:8000")
+BASE_DOMAIN = env("BASE_DOMAIN", default="localhost:8000")
+STREAM_DOMAIN = env("STREAM_DOMAIN", default="localhost:8001")
+API_DOMAIN = env("API_DOMAIN", default="localhost:8000")
+
+RABBITMQ_HOST = env("RABBITMQ_HOST")
+RABBITMQ_PORT = env("RABBITMQ_PORT")
+RABBITMQ_USER = env("RABBITMQ_USER")
+RABBITMQ_PASSWORD = env("RABBITMQ_PASSWORD")
+RABBITMQ_QUEUE_NAME = env("RABBITMQ_QUEUE_NAME")
 
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
             "hosts": [(env('REDIS_HOST', default='localhost'), env('REDIS_PORT', default=6379))],
+            "capacity": 1000,  # 🔹 Increase buffer size to allow more messages
+            "expiry": 10,  # 🔹 Reduce expiry to clear old messages faster
         },
     },
 }

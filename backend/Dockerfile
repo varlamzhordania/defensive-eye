@@ -1,4 +1,4 @@
-# Base image with Python
+# Base image with Python (Slim version)
 FROM python:3.11-slim
 
 # Set environment variables
@@ -8,11 +8,12 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # Set working directory
 WORKDIR /home/defensive-eye
 
-# Install system dependencies
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+# Install system dependencies (Including OpenCV dependencies)
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libpq-dev \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
 # Install pip dependencies

@@ -1,10 +1,15 @@
 import cv2
 import asyncio
 import websockets
+import environ
+
+env = environ.Env()
 
 # WebSocket URL
-CODE = "DEF456UVW"
-WEBSOCKET_URL = f"wss://stream.defensiveeyes.com/ws/camera_stream/?code={CODE}"
+CODE = "abcdefg"
+STREAM_HOST = env("STREAM_DOMAIN",default="127.0.0.1:8001")
+STREAM_PROTOCOL = "ws"
+WEBSOCKET_URL = f"{STREAM_PROTOCOL}://{STREAM_HOST}/ws/camera_stream/?code={CODE}"
 
 async def stream_camera():
     async with websockets.connect(WEBSOCKET_URL) as websocket:

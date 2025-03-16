@@ -7,52 +7,70 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 text-gray-800">
+
+    <!-- Header -->
     <header class="bg-blue-600 text-white p-4 shadow-md">
-        <div class="container mx-auto">
-            <h1 class="text-2xl font-bold">Live Stream - {{ product.product.name }}</h1>
-            <p class="text-sm">Streaming Code: {{ product.code }}</p>
+        <div class="container mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold">Live Stream - {{ product.product.name }}</h1>
+                <p class="text-sm">Streaming Code: <span class="font-semibold">{{ product.code }}</span></p>
+            </div>
+            <div id="status" class="text-sm font-semibold bg-gray-200 text-gray-800 px-3 py-1 rounded">
+                Connecting...
+            </div>
         </div>
     </header>
 
-    <main class="container">
-        <div class="">
-            <!-- Image element for displaying JPEG frames -->
-            <div class="relative bg-gray-200 overflow-hidden">
-                <img id="live-stream" alt="Live Stream"
-                    class="w-full max-w-full h-screen object-cover border-2 border-gray-300 rounded-lg">
+    <!-- Live Stream Container -->
+    <main class="flex justify-center items-center h-[80vh] p-4">
+        <div class="relative  max-w-4xl bg-black rounded-lg shadow-lg overflow-hidden border-4 border-gray-300">
+            <div id="stream-overlay" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                <p class="text-white text-xl font-semibold">Stream Disconnected</p>
             </div>
+            <img id="live-stream" alt="Live Stream"
+                 class="w-full h-auto object-contain rounded-lg">
         </div>
     </main>
+
+    <!-- JavaScript -->
     <script>
         const imgElement = document.getElementById('live-stream');
         const statusElement = document.getElementById('status');
+        const overlay = document.getElementById('stream-overlay');
 
-        const protocol = window.location.protocol === "http:" ? "ws" : "wss"
-        
-        // WebSocket connection
+        const protocol = window.location.protocol === "http:" ? "ws" : "wss";
         const socket = new WebSocket(`${protocol}://{{ location }}{{ stream_url }}`);
         socket.binaryType = 'arraybuffer';
 
-        // Handle WebSocket events
         socket.onopen = () => {
-            statusElement.textContent = "Connected to the stream!";
+            statusElement.textContent = "✅ Connected";
+            statusElement.classList.replace("bg-gray-200", "bg-green-500");
+            statusElement.classList.replace("text-gray-800", "text-white");
+            overlay.classList.add("hidden");
         };
 
         socket.onmessage = (event) => {
-            // Convert received binary data to a Blob and update the <img> src
-            const blob = new Blob([event.data], { type: 'image/jpeg' });
-            const url = URL.createObjectURL(blob);
-            imgElement.src = url; // Update image source dynamically
+            try {
+                const blob = new Blob([event.data], { type: 'image/webp' });  // Change to 'image/webp' if needed
+                const url = URL.createObjectURL(blob);
+                imgElement.src = url;
+            } catch (error) {
+                console.error("⚠️ WebSocket error:", error);
+            }
         };
 
         socket.onclose = () => {
-            statusElement.textContent = "Stream disconnected.";
+            statusElement.textContent = "❌ Stream Disconnected";
+            statusElement.classList.replace("bg-green-500", "bg-red-500");
+            overlay.classList.remove("hidden");
         };
 
         socket.onerror = (error) => {
-            console.error('WebSocket error:', error);
-            statusElement.textContent = "An error occurred. Please try again.";
+            console.error("WebSocket error:", error);
+            statusElement.textContent = "⚠️ Error: Reconnecting...";
+            statusElement.classList.replace("bg-green-500", "bg-yellow-500");
         };
     </script>
+
 </body>
 </html>
