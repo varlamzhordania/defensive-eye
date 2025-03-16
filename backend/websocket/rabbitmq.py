@@ -11,12 +11,14 @@ class RabbitMQPublisher:
     _instance = None
 
     def __new__(cls):
+        """Ensure a singleton instance is used."""
         if cls._instance is None:
             cls._instance = super().__new__(cls)
             cls._instance._init_rabbitmq()
         return cls._instance
 
     def _init_rabbitmq(self):
+        """Initialize the RabbitMQ connection once."""
         try:
             self.connection = pika.BlockingConnection(
                 pika.ConnectionParameters(
@@ -25,37 +27,45 @@ class RabbitMQPublisher:
                     credentials=pika.PlainCredentials(
                         settings.RABBITMQ_USER, settings.RABBITMQ_PASSWORD
                     ),
+                    heartbeat=600,  # Prevent idle disconnections
                 )
             )
             self.channel = self.connection.channel()
             self.channel.queue_declare(queue=settings.RABBITMQ_QUEUE_NAME, durable=True)
-        except pika.exceptions.AMQPConnectionError:
+            print("RabbitMQ Publisher Connected Successfully")
+        except pika.exceptions.AMQPConnectionError as e:
+            print(f"RabbitMQ Publisher Connection Error: {e}")
             self.connection, self.channel = None, None
 
     def _ensure_connection(self):
-        if self.channel is None or self.channel.is_closed:
+        """Ensure connection and channel are alive."""
+        if self.connection is None or self.connection.is_closed:
+            print("Reconnecting to RabbitMQ Publisher...")
             self._init_rabbitmq()
+        elif self.channel is None or self.channel.is_closed:
+            print("Reopening RabbitMQ Publisher channel...")
+            self.channel = self.connection.channel()
+            self.channel.queue_declare(queue=settings.RABBITMQ_QUEUE_NAME, durable=True)
 
     def publish_frame(self, camera_code, frame_bytes):
-        self._ensure_connection()
+        """Publish a frame to RabbitMQ."""
+        self._ensure_connection()  # Ensure connection before publishing
 
         if self.channel is None:
+            print("RabbitMQ Publisher: Cannot publish frame, channel is None!")
             return
 
-        if isinstance(frame_bytes, str):
-            frame_bytes = frame_bytes.encode("utf-8")
-
-        encoded_frame = base64.b64encode(frame_bytes).decode("utf-8")
-        message = json.dumps({"code": camera_code, "bytes_data": encoded_frame})
-
         try:
+            encoded_frame = base64.b64encode(frame_bytes).decode("utf-8")
+            message = json.dumps({"code": camera_code, "bytes_data": encoded_frame})
             self.channel.basic_publish(
                 exchange="",
                 routing_key=settings.RABBITMQ_QUEUE_NAME,
                 body=message,
             )
-        except pika.exceptions.AMQPError:
-            self._init_rabbitmq()
+        except pika.exceptions.AMQPError as e:
+            print(f"RabbitMQ Publisher Error: {e}")
+            self._init_rabbitmq()  # Only reinitialize if publishing fails
 
 
 class RabbitMQWorker:
@@ -72,10 +82,11 @@ class RabbitMQWorker:
         try:
             credentials = pika.PlainCredentials(self.user, self.password)
             self.connection = pika.BlockingConnection(
-                pika.ConnectionParameters(host=self.host, port=self.port, credentials=credentials)
+                pika.ConnectionParameters(host=self.host, port=self.port, credentials=credentials,heartbeat=600)
             )
             self.channel = self.connection.channel()
             self.channel.queue_declare(queue=self.queue_name, durable=True)
+            print("RabbitMQ Worker Connected Successfully")
             return True
         except pika.exceptions.AMQPConnectionError:
             return False

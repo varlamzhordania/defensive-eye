@@ -5,10 +5,11 @@ import time
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from asgiref.sync import sync_to_async
 
 from main.models import ProductRegistered
+from core.utils import fancy_message
 
 from .models import StreamingSession
 from .rabbitmq import RabbitMQPublisher
@@ -40,12 +41,29 @@ class UserStreamConsumer(AsyncWebsocketConsumer):
 class CameraStreamConsumer(AsyncWebsocketConsumer):
     last_frame_time = 0
     last_frame = None
+    max_fps = 10
+    session = None
 
     async def connect(self):
         self.code = self.scope['query_string'].decode('utf-8').split('=')[1]
 
         try:
-            self.camera = await sync_to_async(ProductRegistered.objects.get)(code=self.code)
+            self.camera = await sync_to_async(
+                ProductRegistered.objects.select_related("claimed_user", "claimed_user__subscription").get
+            )(code=self.code)
+            user = self.camera.claimed_user
+            has_subscription = await sync_to_async(user.has_subscription)()
+
+            if not has_subscription:
+                print(f"Camera {self.code} owner has no subscription. connection refused.")
+                await self.close(code=4001)  # Reject connection if no subscription
+                return
+
+            plan = await sync_to_async(lambda: user.subscription.plan)()
+            self.max_fps = plan.max_fps
+            self.quality = plan.quality
+
+
         except ProductRegistered.DoesNotExist:
             await self.close(code=4001)
             return
@@ -57,7 +75,8 @@ class CameraStreamConsumer(AsyncWebsocketConsumer):
     async def receive(self, bytes_data):
         """Process, compress, and publish frames efficiently."""
         current_time = time.time()
-        if current_time - self.last_frame_time < 0.1:  # Throttle to 10 FPS
+        min_time_between_frames = 1.0 / self.max_fps
+        if current_time - self.last_frame_time < min_time_between_frames:  # Throttle to 10 FPS
             return
 
         self.last_frame_time = current_time
@@ -72,13 +91,11 @@ class CameraStreamConsumer(AsyncWebsocketConsumer):
         if frame is not None and self.detect_motion(frame):
             frame = self.optimize_frame(frame)
 
-            # ✅ Encode frame to JPEG format correctly
             success, buffer = cv2.imencode('.webp', frame, [cv2.IMWRITE_WEBP_QUALITY, 50])
             if not success:
-                print("⚠️ Error encoding frame to JPEG")
+                print("⚠️ Error encoding frame to webp")
                 return
 
-            # ✅ Send raw binary JPEG to RabbitMQ
             self.publisher.channel.basic_publish(
                 exchange="",
                 routing_key=settings.RABBITMQ_QUEUE_NAME,
@@ -87,8 +104,18 @@ class CameraStreamConsumer(AsyncWebsocketConsumer):
             )
 
     def optimize_frame(self, frame):
-        """Resize and compress frame."""
-        frame = cv2.resize(frame, (640, 480), interpolation=cv2.INTER_AREA)
+        """Resize and compress frame based on user's subscription quality."""
+
+        resolution_map = {
+            "Low": (480, 320),  # 320p
+            "Medium": (854, 480),  # 480p
+            "HD": (1280, 720),  # 720p
+            "Full-HD": (1920, 1080),  # 1080p
+            "Ultra-HD": (3840, 2160)  # 4K
+        }
+        target_resolution = resolution_map.get(self.quality, (854, 480))
+        frame = cv2.resize(frame, target_resolution, interpolation=cv2.INTER_AREA)
+
         return frame
 
     def detect_motion(self, frame):
@@ -109,15 +136,20 @@ class CameraStreamConsumer(AsyncWebsocketConsumer):
         return True
 
     async def disconnect(self, close_code):
-        """End streaming session."""
-        if self.session:
+        """End streaming session, but DO NOT close RabbitMQ (singleton)."""
+        if self.session and self.session is not None:
             await sync_to_async(self.session.end_session)()
+
+        print(f"❌ Camera {self.camera.code} disconnected")
 
         await super().disconnect(close_code)
 
 
 @login_required
 def live_stream_view(request, code):
+    if not request.user.has_subscription():
+        fancy_message(request, "You need to have a subscription first to access this page.", "error")
+        return redirect("main:cameras_list")
     product = get_object_or_404(ProductRegistered, code=code, claimed_user=request.user)
 
     return render(request, 'cameras/live_stream.html', {

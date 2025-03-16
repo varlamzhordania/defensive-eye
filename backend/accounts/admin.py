@@ -1,4 +1,4 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.contrib.auth.admin import UserAdmin
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
@@ -17,7 +17,6 @@ class SubscriptionInline(admin.StackedInline):
 
 @admin.register(User)
 class CustomUserAdmin(ImportExportModelAdmin, UserAdmin):
-    model = User
     list_display = (
         "id", "username", "email", "wallet", "is_staff", "is_superuser", "is_active", "date_joined",
         "last_login")
@@ -42,6 +41,24 @@ class CustomUserAdmin(ImportExportModelAdmin, UserAdmin):
     ordering = ("id",)
     resource_classes = [CustomUserResource]
     inlines = [SubscriptionInline]
+
+    @admin.action(description="Update Subscription Status from Stripe")
+    def update_subscription_status_admin(self, request, queryset):
+        """Admin action to update the subscription status of selected users."""
+        success_count = 0
+        failed_count = 0
+
+        for user in queryset:
+            if user.update_subscription_status():
+                success_count += 1
+            else:
+                failed_count += 1
+        if success_count > 0:
+            self.message_user(request, f"✅ {success_count} users' subscriptions updated successfully.", )
+        if failed_count > 0:
+            self.message_user(request, f"⚠️ {failed_count} users failed to update subscription.", messages.ERROR)
+
+    actions = [update_subscription_status_admin]
 
 
 @admin.register(Contacts)

@@ -56,6 +56,27 @@ class User(AbstractUser):
             return self.subscription.status in ['active', 'trialing']
         return False
 
+    def update_subscription_status(self):
+        """
+        Check the user's subscription status in Stripe and update the database.
+        """
+        if not self.stripe_customer_id:
+            return False
+        if not hasattr(self, "subscription"):
+            return False
+
+        try:
+            subscription = self.subscription
+            stripe_subscription = stripe.Subscription.retrieve(subscription.stripe_subscription_id)
+            print(stripe_subscription)
+            self.subscription.status = stripe_subscription.status
+            self.subscription.save(update_fields=["status"])
+            return True
+
+        except stripe.error.StripeError as e:
+            print(f"Stripe API Error: {e}")
+        return False  # Error handling
+
 
 class Subscription(BaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='subscription')

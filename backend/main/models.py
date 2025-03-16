@@ -14,6 +14,13 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 class Plans(BaseModel):
+    class QualityChoices(models.TextChoices):
+        LOW = "Low", _("320p")
+        MEDIUM = "Medium", _("480p")
+        HD = "HD", _("720p")
+        FULL_HD = "Full-HD", _("1080p")
+        ULTRA_HD = "Ultra-HD", _("4K")
+
     name = models.CharField(
         verbose_name=_('Name'),
         max_length=255,
@@ -31,6 +38,9 @@ class Plans(BaseModel):
         default='',
         help_text=_('Provide a brief description of the plan')
     )
+    max_fps = models.PositiveIntegerField(default=10, verbose_name=_('Max FPS'), help_text=_('Max FPS Camera streams'))
+    quality = models.CharField(verbose_name=_("Quality"), max_length=10, choices=QualityChoices.choices,
+                               default=QualityChoices.MEDIUM)
     price = models.DecimalField(
         max_digits=10,
         decimal_places=2,
