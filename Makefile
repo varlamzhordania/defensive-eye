@@ -52,6 +52,9 @@ static:
 up:
 	$(DOCKER_COMPOSE) up
 
+upd:
+	$(DOCKER_COMPOSE) up -d
+
 # Stop and remove containers, networks, and volumes
 down:
 	$(DOCKER_COMPOSE) down
