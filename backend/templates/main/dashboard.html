@@ -1,4 +1,58 @@
 {% extends 'web/base_dashboard.html' %}
 {% block dashboard_content %}
-	hello
+
+    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8 w-full gap-4 p-4">
+
+        <!-- Bandwidth Alert -->
+        <div class="col-span-8 bg-red-100 text-red-600 p-4 rounded-lg hidden" id="bandwidthAlert">
+        </div>
+
+
+        <!-- Active Live Feeds -->
+        <div class="col-span-2 bg-white shadow-md p-4 rounded-lg">
+            <div class="flex gap-2 justify-between">
+                <h2 class="text-lg font-semibold">Active Live Feeds</h2>
+                <button id="activeFeedsRefresh"><i class="fa fa-solid fa-refresh"></i></button>
+            </div>
+            <p class="text-3xl font-bold text-green-500" id="activeFeeds">0</p>
+        </div>
+
+        <!-- Subscription Plan -->
+        <div class="col-span-2 bg-white shadow-md p-4 rounded-lg">
+            <h2 class="text-lg font-semibold">Your Plan</h2>
+            <p class="text-xl font-bold text-primary-500" id="subscriptionPlan">-</p>
+            <p class="text-sm text-gray-500"><span id="subscriptionPlanStatus" class="badge rounded capitalize">-</span>
+            </p>
+        </div>
+
+        <!-- Total Streamed Time -->
+        <div class="col-span-2 bg-white shadow-md p-4 rounded-lg">
+            <h2 class="text-lg font-semibold">Total Stream Time</h2>
+            <p class="text-3xl font-bold text-primary-500" id="streamTime">0 hrs</p>
+            <p class="text-sm text-gray-500">Avg per Session: <span id="avgStreamTime">-</span> hrs</p>
+        </div>
+
+        <!-- Total Bandwidth used -->
+        <div class="col-span-2 bg-white shadow-md p-4 rounded-lg">
+            <h2 class="text-lg font-semibold">Total Bandwidth Used</h2>
+            <p class="text-3xl font-bold text-red-500" id="bandwidthUsed">0 GB</p>
+            <p class="text-sm text-gray-500">Avg per Session: <span id="avgBandwidth">-</span> GB</p>
+            <p class="text-sm text-gray-500">Limit: <span id="bandwidthLimit">-</span></p>
+        </div>
+
+
+        <!-- Chart Container -->
+        <div class="col-span-4 bg-white shadow-md p-4 rounded-lg">
+            <h2 class="text-lg font-semibold">Stream Time Trend (Last 6 Months)</h2>
+            <div id="streamTimeChart"></div>
+        </div>
+
+        <!-- Bandwidth Usage Chart -->
+        <div class="col-span-4 bg-white shadow-md p-4 rounded-lg">
+            <h2 class="text-lg font-semibold">Bandwidth Usage (Last 6 Months)</h2>
+            <div id="bandwidthChart"></div>
+        </div>
+
+    </div>
+
 {% endblock %}

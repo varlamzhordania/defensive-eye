@@ -38,9 +38,29 @@ class Plans(BaseModel):
         default='',
         help_text=_('Provide a brief description of the plan')
     )
-    max_fps = models.PositiveIntegerField(default=10, verbose_name=_('Max FPS'), help_text=_('Max FPS Camera streams'))
-    quality = models.CharField(verbose_name=_("Quality"), max_length=10, choices=QualityChoices.choices,
-                               default=QualityChoices.MEDIUM)
+    max_fps = models.PositiveIntegerField(
+        default=10,
+        verbose_name=_('Max FPS'),
+        help_text=_('Max FPS Camera streams')
+    )
+    quality = models.CharField(
+        verbose_name=_("Quality"),
+        max_length=10,
+        choices=QualityChoices.choices,
+        default=QualityChoices.MEDIUM
+    )
+    is_unlimited_bandwidth = models.BooleanField(
+        verbose_name=_("Unlimited Bandwidth"),
+        default=True,
+        help_text=_("Check this to allow unlimited bandwidth usage for this plan.")
+    )
+    bandwidth_limit_gb = models.PositiveIntegerField(
+        verbose_name=_("Bandwidth Limit (GB)"),
+        null=True,
+        blank=True,
+        help_text=_("Set the bandwidth limit in GB per month. Leave blank if unlimited."),
+        validators=[MinValueValidator(1, message=_('Bandwidth limit must be at least 1 GB'))]
+    )
     price = models.DecimalField(
         max_digits=10,
         decimal_places=2,

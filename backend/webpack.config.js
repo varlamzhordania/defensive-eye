@@ -6,6 +6,7 @@ const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 module.exports = {
     entry: {
         base: './static/js/base.js',
+        dashboard: './static/js/dashboard.js',
     },
     output: {
         path: path.resolve(__dirname, './static/dist'),

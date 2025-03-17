@@ -29,6 +29,7 @@ def product_view(request: HttpRequest, slug, *args, **kwargs) -> HttpResponse:
 
 @login_required
 def dashboard_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
+
     context = {
         "active_tab": "dashboard",
         "title": "Dashboard | Defensive Eye Security",
